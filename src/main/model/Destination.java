@@ -4,16 +4,16 @@ public class Destination {
 
     private String palce;
     private int budget;
-    private Wishlist wishlist;
+    private WishList wishList;
     private Itinerary itinerary;
 
     // REQUIRES: budget >= 0
     // EFFECTS:
     public Destination(String place, int budget,
-                       Wishlist wishlist, Itinerary itinerary) {
+                       WishList wishList, Itinerary itinerary) {
         this.palce = place;
         this.budget = budget;
-        this.wishlist = wishlist;
+        this.wishList = wishList;
         this.itinerary = itinerary;
     }
 
