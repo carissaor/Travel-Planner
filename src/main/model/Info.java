@@ -11,17 +11,20 @@ public class Info {
         this.cost = cost;
         this.isChosen = false;
     }
-    public void chooseThis() {
-        isChosen = true;
+    public void toggle() {
+        isChosen = !isChosen;
     }
 
-    public void removeThis() {
-        isChosen = false;
+    public String getDescription() {
+        return description;
     }
 
-    public void addToItinerary(Itinerary itinerary) {
-        if (isChosen == true) {
-            itinerary.addItinerary(this);
-        }
+    public int getCost() {
+        return cost;
+    }
+
+    public boolean getIsChosen() {
+        return isChosen;
     }
 }
+

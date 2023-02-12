@@ -4,8 +4,8 @@
 
 The application will enable users to add destinations they want to visit in the future.
 Under each destination, there will be a budget, a wishlist and an itinerary. 
-The wishlist will include all information researched by the user for example restaurant, place to visit, 
-transportation etc. Each piece of information will include an estimated cost. Then user can click on it and add that to 
+The wishlist will include all information researched by the user including cost and descriptions for 
+restaurant, activities, transportation etc. Then user can click on it and add that to 
 the itinerary as long as the total cost is within the budget. 
 
 > Who will use it?
@@ -23,9 +23,10 @@ But, it is sometimes hard to plan for the itinerary especially when I have limit
 
 ## User Stories
 
-- As a user, I want to be able to add destination to my wishlist.
+- As a user, I want to be able to add new destination to list.
 - As a user, I want to be able to view the details of each destination.
 - As a user, I want to be able to keep track of my budget.
+- As a user, I want to be able to modify and view the schedule of each day.
 
  
 
