@@ -11,7 +11,7 @@ public class EachDayTest {
 
     @BeforeEach
     public void runBefore() {
-        testDay = new EachDay();
+        testDay = new EachDay(1);
         info1 = new Info("Granville Island", 100);
     }
 
@@ -27,6 +27,8 @@ public class EachDayTest {
         assertEquals(1, testDay.getDayList().size());
         testDay.addInfo(info2);
         assertEquals(2, testDay.getDayList().size());
+        assertEquals(info2, testDay.getDayList().get(1));
+        assertEquals("Granville Island", testDay.getDayList().get(0).getDescription());
     }
 
     @Test
@@ -44,5 +46,4 @@ public class EachDayTest {
         testDay.removeInfo(info2);
         assertEquals(1, testDay.getDayList().size());
     }
-
 }

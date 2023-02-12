@@ -33,4 +33,12 @@ public class ListRelatedTest {
         testWishList.addItem(testData2);
         assertEquals(2, testWishList.getList().size());
     }
+
+    @Test
+    public void testRemove() {
+        testWishList.addItem(testData1);
+        testWishList.addItem(testData2);
+        testWishList.removeItem(testData2);
+        assertEquals(1, testWishList.getList().size());
+    }
 }

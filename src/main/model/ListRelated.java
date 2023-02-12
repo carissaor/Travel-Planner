@@ -13,6 +13,10 @@ public class ListRelated<T> {
         list.add(type);
     }
 
+    public void removeItem(T type) {
+        list.remove(type);
+    }
+
     public ArrayList<T> getList() {
         return list;
     }
