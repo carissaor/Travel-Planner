@@ -4,21 +4,17 @@ public class Info {
 
     private String description;
     private int cost;
-    private int dayNum;
+    private char type;
     private boolean isChosen;
 
-    public Info(String description, int cost) {
+    public Info(String description, int cost, char type) {
         this.description = description;
         this.cost = cost;
-        this.dayNum = 0;
+        this.type = type;
         this.isChosen = false;
     }
     public void toggle() {
         isChosen = !isChosen;
-    }
-
-    public void setDayNum(int dayNum) {
-        this.dayNum = dayNum;
     }
 
     public String getDescription() {
@@ -29,8 +25,8 @@ public class Info {
         return cost;
     }
 
-    public int getDayNum() {
-        return dayNum;
+    public char getType() {
+        return type;
     }
 
     public boolean getIsChosen() {

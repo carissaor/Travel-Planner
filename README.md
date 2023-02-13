@@ -24,7 +24,7 @@ But, it is sometimes hard to plan for the itinerary especially when I have limit
 ## User Stories
 
 - As a user, I want to be able to add new destination to list.
-- As a user, I want to be able to view the details of each destination.
+- As a user, I want to be able to categorize my findings.
 - As a user, I want to be able to keep track of my budget.
 - As a user, I want to be able to modify and view the schedule of each day.
 

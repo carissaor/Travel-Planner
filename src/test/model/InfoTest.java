@@ -11,7 +11,7 @@ public class InfoTest {
 
     @BeforeEach
     public void runBefore() {
-        testInfo = new Info("Granville Island", 100);
+        testInfo = new Info("Granville Island", 100, 'A');
     }
 
     @Test

@@ -40,6 +40,10 @@ public class Itinerary {
         }
     }
 
+    public void setBudgetLeft(int amount) {
+        budgetLeft += amount;
+    }
+
     public int getBudgetLeft() {
         return budgetLeft;
     }

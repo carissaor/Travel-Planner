@@ -12,8 +12,8 @@ public class ListRelatedTest {
     @BeforeEach
     public void runBefore() {
         testWishList = new WishList();
-        testData1 = new Info("Steam Clock", 0);
-        testData2 = new Info("Granville Island", 100);
+        testData1 = new Info("Steam Clock", 0, 'A');
+        testData2 = new Info("Granville Island", 100, 'A');
     }
 
     @Test

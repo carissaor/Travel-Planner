@@ -13,8 +13,8 @@ public class ItineraryTest {
     @BeforeEach
     public void runBefore() {
         testItinerary = new Itinerary(5, 1000);
-        testData1 = new Info("description", 50);
-        testData2 = new Info("description", 2000);
+        testData1 = new Info("description", 50, 'F');
+        testData2 = new Info("description", 2000, 'A');
     }
 
     @Test
@@ -38,5 +38,11 @@ public class ItineraryTest {
         testItinerary.addItinerary(2, testData2);
         assertFalse(testItinerary.getItineraryList().get(1).alreadyInList(testData2));
         assertEquals(1000, testItinerary.getBudgetLeft());
+    }
+
+    @Test
+    void testSetBudget() {
+        testItinerary.setBudgetLeft(-20);
+        assertEquals(1000-20, testItinerary.getBudgetLeft());
     }
 }
