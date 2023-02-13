@@ -214,7 +214,7 @@ public class App {
     private void displayEachDay() {
         System.out.println("Your Itinerary: ");
         for (int i = 0; i < itinerary.getItineraryList().size(); i++) {
-            System.out.println("Day " + (i+1));
+            System.out.println("Day " + (i + 1));
             for (int x = 0; x < itinerary.getItineraryList().get(i).getDayList().size(); x++) {
                 System.out.println(itinerary.getItineraryList().get(i).getDayList().get(x).getDescription());
             }
