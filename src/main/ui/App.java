@@ -12,6 +12,7 @@ public class App {
     private Info info;
     private Itinerary itinerary;
     private Scanner userInput;
+    private int budget;
     private int duration;
 
     public App() {
@@ -20,7 +21,7 @@ public class App {
 
     private void runApp() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         init();
 
@@ -32,16 +33,15 @@ public class App {
             if (command.equals("Q")) {
                 keepGoing = false;
             } else {
-                processCommand(command);
+                processCommandMain(command);
             }
         }
 
-        System.out.println("\n Have a good trip!");
+        System.out.println("Have a good trip!");
     }
 
     private void init() {
         destinationList = new DestinationList();
-        wishList = new WishList();
         userInput = new Scanner(System.in);
         userInput.useDelimiter("\n");
     }
@@ -53,116 +53,140 @@ public class App {
         } else {
             System.out.println("A -> add new destination");
             System.out.println("D -> delete an existing destination");
-            System.out.println("V -> view existing destinations");
+            System.out.println("V -> view existing destination(s)");
             System.out.println("Q -> quit");
         }
     }
 
-    private void processCommand(String command) {
+    private void processCommandMain(String command) {
         if (command.equals("A")) {
-            addDestination();
+            addDest();
         } else if (command.equals("D")) {
             deleteDest();
         } else if (command.equals("V")) {
-            viewDest();
-        } else if (command.equals("T")) {
-            addToItinerary(info);
-        } else if (command.equals("M")) {
-            addToWishList();
-        } else if (command.equals("W")) {
-            viewWishList();
-        } else if (command.equals("C")) {
-            chooseInfo();
+            viewDestList();
         }
     }
 
-    private void addDestination() {
+    private void processCommandDest(String command) {
+        int amount;
+        if (command.equals("B")) {
+            System.out.println("How much?");
+            amount = userInput.nextInt();
+            itinerary.setBudgetLeft(amount);
+            System.out.println("Remaining budget: " + itinerary.getBudgetLeft());
+        } else if (command.equals("D")) {
+            System.out.println("How much?");
+            amount = userInput.nextInt();
+            itinerary.setDuration(amount);
+            System.out.println("New duration: " + itinerary.getDuration());
+        } else if (command.equals("W")) {
+            viewWishList();
+        } else if (command.equals("I")) {
+            editItinerary();
+        } else {
+            System.out.println("no this choice");
+        }
+    }
+
+    private void processCommandWL(String command) {
+        if (command.equals("A")) {
+            addToItinerary(info);
+        } else if (command.equals("M")) {
+            addWishList();
+        } else if (command.equals("V")) {
+            viewWishList();
+        } else if (command.equals("E")) {
+            editItinerary();
+        }
+    }
+
+    private void addDest() {
         String placeName;
-        int budget;
 
         System.out.println("Where do you want to visit? ");
         placeName = userInput.next().toLowerCase();
 
-        System.out.println("For how many days? ");
-        duration = userInput.nextInt();
-        // TODO IF -ve
-
         System.out.println("How much budget do you have? ");
         budget = userInput.nextInt();
 
-        destination = new Destination(placeName, duration, budget);
-        itinerary = new Itinerary(duration, budget);
-        destinationList.addItem(destination);
+        System.out.println("For how many days? ");
+        duration = userInput.nextInt();
 
-        addToWishList();
+        destination = new Destination(placeName, budget, duration);
+        destinationList.addItem(destination);
+        wishList = new WishList();
+        itinerary = new Itinerary(budget, duration);
+
+        addWishList();
     }
 
     private void deleteDest() {
         String removePlace;
-        System.out.println("Which destination have you visited? ");
-        viewDest();
-        removePlace = userInput.next().toLowerCase();
-        for (Destination destination: destinationList.getList()) {
-            if (removePlace.equals(destination.getPlaceName().toLowerCase())) {
-                removeDestination(destination);
-                break;
-            }
-        }
-    }
-
-    private void removeDestination(Destination destination) {
-        destinationList.removeItem(destination);
-    }
-
-
-    private void viewDest() {
         for (Destination destination: destinationList.getList()) {
             System.out.println(destination.getPlaceName());
         }
-    }
-
-    private void viewWishList() {
-        for (Info info : wishList.getList()) {
-            if (info.getType() == 'A') {
-                System.out.println("ACTIVITIES");
-                System.out.println(info.getDescription());
-            } else if (info.getType() == 'F') {
-                System.out.println("FOOD");
-                System.out.println(info.getDescription());
-            } else if (info.getType() == 'L') {
-                System.out.println("LIVING SPACE");
-                System.out.println(info.getDescription());
+        System.out.println("Which destination have you visited? ");
+        removePlace = userInput.next().toLowerCase();
+        for (Destination destination: destinationList.getList()) {
+            if (removePlace.equals(destination.getPlaceName().toLowerCase())) {
+                destinationList.removeItem(destination);
+                break;
             } else {
-                System.out.println("OTHERS");
-                System.out.println(info.getDescription());
+                System.out.println("no this destination");
             }
         }
-
-        afterViewWishListMenu();
     }
 
-    private void afterViewWishListMenu() {
+    private void viewDestList() {
+
+        for (int i = 0; i < destinationList.getList().size(); i++) {
+            Destination destination = destinationList.getList().get(i);
+            System.out.println(i + 1 + ".");
+            System.out.println("Place: " + destination.getPlaceName());
+            System.out.println("Budget: " + destination.getItinerary().getBudgetLeft());
+            System.out.println("Duration: " + destination.getItinerary().getDuration() + " days");
+        }
+        afterViewDestMenu();
+    }
+
+    private void afterViewDestMenu() {
         String command;
-        System.out.println("Do you want to...");
-        System.out.println("C -> add to itinerary");
-        System.out.println("M -> add more places first");
-        System.out.println("Q -> quit go back to main");
+        String destName;
+        System.out.println("E -> edit destination info");
+        System.out.println("Q -> quit");
         command = userInput.next().toUpperCase();
-        processCommand(command);
-    }
-
-    private void chooseInfo() {
-        String chooseInfo;
-        System.out.println("Which place would you like to add to itinerary?");
-        chooseInfo = userInput.next().toLowerCase();
-        for (Info info: wishList.getList()) {
-            if (chooseInfo.equals(info.getDescription())) {
-                addToItinerary(info);
+        if (command.equals("E")) {
+            if (destinationList.getList().size() == 1) {
+                editDest();
+            } else {
+                System.out.println("Which destination?");
+                destName = userInput.next().toLowerCase();
+                for (Destination destination : destinationList.getList()) {
+                    if (destName.equals(destination.getPlaceName().toLowerCase())) {
+                        this.destination = destination;
+                        this.budget = destination.getItinerary().getBudgetLeft();
+                        this.wishList = destination.getWishList();
+                        this.itinerary = destination.getItinerary();
+                        editDest();
+                        break;
+                    }
+                }
             }
         }
     }
 
-    private void addToWishList() {
+    private void editDest() {
+        String command;
+        System.out.println("B -> budget");
+        System.out.println("D -> duration");
+        System.out.println("W -> wishlist");
+        System.out.println("I -> Itinerary");
+        command = userInput.next().toUpperCase();
+        processCommandDest(command);
+    }
+
+    private void addWishList() {
         String localPlace;
         int cost;
         char type;
@@ -183,46 +207,126 @@ public class App {
 
         info = new Info(localPlace, cost, type);
         wishList.addItem(info);
-        afterAddInfoMenu();
+
+        afterAddWL();
     }
 
-    private void afterAddInfoMenu() {
+    private void afterAddWL() {
         String command;
         System.out.println("Do you want to...");
-        System.out.println("T -> add to itinerary");
-        System.out.println("M -> add more places first");
-        System.out.println("W -> view wishlist");
+        System.out.println("A -> add this to itinerary");
+        System.out.println("M -> add more places to wishlist");
+        System.out.println("V -> view wish list");
         System.out.println("Q -> quit go back to main");
         command = userInput.next().toUpperCase();
-        processCommand(command);
+        processCommandWL(command);
     }
+
+    private void viewWishList() {
+        for (Info info : wishList.getList()) {
+            if (info.getType() == 'A') {
+                System.out.println("ACTIVITIES");
+                System.out.println(info.getDescription());
+            } else if (info.getType() == 'F') {
+                System.out.println("FOOD");
+                System.out.println(info.getDescription());
+            } else if (info.getType() == 'L') {
+                System.out.println("LIVING SPACE");
+                System.out.println(info.getDescription());
+            } else {
+                System.out.println("OTHERS");
+                System.out.println(info.getDescription());
+            }
+        }
+
+        afterViewWL();
+    }
+
+    private void afterViewWL() {
+        String command;
+        System.out.println("Do you want to...");
+        System.out.println("E -> edit itinerary");
+        System.out.println("M -> add more places first");
+        System.out.println("V -> view wishlist");
+        System.out.println("Q -> quit go back to main");
+        command = userInput.next().toUpperCase();
+        processCommandWL(command);
+    }
+
+    private void editItinerary() {
+        String chooseInfo;
+        System.out.println("A -> add place to itinerary");
+        System.out.println("R -> remove place from itinerary");
+        System.out.println("V -> view itinerary");
+        String input = userInput.next().toUpperCase();
+        if (input.equals("A")) {
+            System.out.println("Which place would you like to add to itinerary?");
+            chooseInfo = userInput.next().toLowerCase();
+            editingItinerary(chooseInfo, true);
+        } else if (input.equals("R")) {
+            if (!itinerary.getItineraryList().isEmpty()) {
+                System.out.println("type place name to remove");
+                chooseInfo = userInput.next().toLowerCase();
+                editingItinerary(chooseInfo, false);
+            } else {
+                System.out.println("nothing to remove");
+            }
+        } else if (input.equals("V")) {
+            displayItinerary();
+        }
+    }
+
+    private void editingItinerary(String chooseInfo, boolean isAdd) {
+        for (Info info: wishList.getList()) {
+            if (chooseInfo.equals(info.getDescription().toLowerCase())) {
+                if (isAdd) {
+                    addToItinerary(info);
+                } else {
+                    removeFromItinerary(info);
+                }
+            }
+        }
+    }
+
 
     private void addToItinerary(Info info) {
         int dayNum;
-        info.toggle();
-        System.out.println("Which day?");
-        dayNum = userInput.nextInt();
-        itinerary.addItinerary(dayNum,info);
+        if (itinerary.withinBudget(info)) {
+            info.chooseThis();
+            System.out.println("Which day?");
+            dayNum = userInput.nextInt();
+            while (!itinerary.withinDuration(dayNum)) {
+                System.out.println("Input must be within duration, try again!");
+                dayNum = userInput.nextInt();
+            }
+            itinerary.editItinerary(dayNum, info);
+        } else {
+            System.out.println("out budget!");
+        }
         displayBudget();
-        displayEachDay();
+        displayItinerary();
+    }
+
+    private void removeFromItinerary(Info info) {
+        int dayNum;
+        System.out.println("From which day? ");
+        dayNum = userInput.nextInt();
+        itinerary.editItinerary(dayNum, info);
+
     }
 
     private void displayBudget() {
         System.out.println("you have $" + itinerary.getBudgetLeft() + " left");
     }
 
-    private void displayEachDay() {
+    private void displayItinerary() {
         System.out.println("Your Itinerary: ");
-        for (int i = 0; i < itinerary.getItineraryList().size(); i++) {
-            System.out.println("Day " + (i + 1));
-            for (int x = 0; x < itinerary.getItineraryList().get(i).getDayList().size(); x++) {
-                System.out.println(itinerary.getItineraryList().get(i).getDayList().get(x).getDescription());
+        for (EachDay eachDay : itinerary.getItineraryList()) {
+            System.out.println(eachDay.getDayNum());
+            for (Info info : eachDay.getList()) {
+                System.out.println(info.getDescription());
             }
         }
-    }
-
-    private void removeFromItinerary() {
-        info.toggle();
     }
 
 }

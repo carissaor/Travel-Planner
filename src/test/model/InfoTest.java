@@ -22,17 +22,10 @@ public class InfoTest {
     }
 
     @Test
-    void addOnceToItinerary() {
-        testInfo.toggle();
-        assertTrue(testInfo.getIsChosen());
-    }
-
-    @Test
     void addAndRemoveFromItinerary() {
-        testInfo.toggle();
-        testInfo.toggle();
-        assertFalse(testInfo.getIsChosen());
-        testInfo.toggle();
+        testInfo.chooseThis();
+        assertTrue(testInfo.getIsChosen());
+        testInfo.removeThis();
         assertTrue(testInfo.getIsChosen());
     }
 

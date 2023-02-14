@@ -13,8 +13,12 @@ public class Info {
         this.type = type;
         this.isChosen = false;
     }
-    public void toggle() {
-        isChosen = !isChosen;
+    public void chooseThis() {
+        isChosen = true;
+    }
+
+    public void removeThis() {
+        isChosen = false;
     }
 
     public String getDescription() {

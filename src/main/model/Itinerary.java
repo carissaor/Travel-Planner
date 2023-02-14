@@ -6,38 +6,42 @@ public class Itinerary {
 
     private ArrayList<EachDay> itineraryList;
     private int budgetLeft;
+    private int duration;
+    private static final String TEXT = "Day ";
 
-    public Itinerary(int numDays, int budget) {
+    public Itinerary(int budget, int duration) {
         this.budgetLeft = budget;
-        itineraryList = new ArrayList<>(numDays);
-        for (int i = 1; i <= numDays; i++) {
-            itineraryList.add(new EachDay(i));
+        this.duration = duration;
+        itineraryList = new ArrayList<>(duration);
+        for (int i = 1; i <= duration; i++) {
+            itineraryList.add(new EachDay(TEXT + i));
         }
     }
 
-    public void addItinerary(int day, Info info) {
-        if (meetCriteria(day, info)) {
-            itineraryList.get(day - 1).addInfo(info);
+    public void editItinerary(int day, Info info) {
+        if (info.getIsChosen()) {
+            itineraryList.get(day - 1).addItem(info);
             budgetLeft = budgetLeft - info.getCost();
-        } else if (!info.getIsChosen()) {
-            itineraryList.get(day - 1).removeInfo(info);
+        } else  {
+            itineraryList.get(day - 1).removeItem(info);
             budgetLeft = budgetLeft + info.getCost();
         }
     }
 
-    public boolean meetCriteria(int day, Info info) {
-        return (day <= itineraryList.size()
-                && withinBudget(info)
-                && info.getIsChosen());
-//                && (!thisDay.alreadyInList(info)));
+    public boolean withinDuration(int day) {
+        return day > 0 && day <= itineraryList.size();
     }
 
-    private boolean withinBudget(Info info) {
-        if ((budgetLeft - info.getCost()) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public void setDuration(int amount) {
+        duration += amount;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public boolean withinBudget(Info info) {
+        return (budgetLeft - info.getCost()) > 0;
     }
 
     public void setBudgetLeft(int amount) {

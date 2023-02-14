@@ -20,23 +20,21 @@ public class ItineraryTest {
     @Test
     void testConstructor() {
         assertEquals(5,testItinerary.getItineraryList().size());
-        assertEquals(1, testItinerary.getItineraryList().get(0).getDayNum());
         assertEquals(1000, testItinerary.getBudgetLeft());
+        assertEquals("Day 1", testItinerary.getItineraryList().get(0).getDayNum());
     }
 
     @Test
     void testAddItinerary() {
-        testData1.toggle();
-        testItinerary.addItinerary(2, testData1);
-        assertTrue(testItinerary.getItineraryList().get(1).alreadyInList(testData1));
+        testData1.chooseThis();
+        testItinerary.editItinerary(2, testData1);
         assertEquals(950, testItinerary.getBudgetLeft());
     }
 
     @Test
     void testOutBudget() {
-        testData2.toggle();
-        testItinerary.addItinerary(2, testData2);
-        assertFalse(testItinerary.getItineraryList().get(1).alreadyInList(testData2));
+        testData2.chooseThis();
+        testItinerary.editItinerary(2, testData2);
         assertEquals(1000, testItinerary.getBudgetLeft());
     }
 
