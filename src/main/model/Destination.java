@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Destination {
 
     private String placeName;
@@ -26,17 +28,21 @@ public class Destination {
         return itinerary;
     }
 
+    public ArrayList<EachDay> getItineraryElement() {
+        return itinerary.getItineraryList();
+    }
+
+
     public String getPlaceName() {
         return placeName;
     }
 
     public int getBudget() {
-        return budget;
+        return itinerary.getBudgetLeft();
     }
 
     public int getDuration() {
-        return duration;
+        return itinerary.getDuration();
     }
-
 }
 

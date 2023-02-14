@@ -2,12 +2,13 @@ package ui;
 
 import model.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
 
     private Destination destination;
-    private DestinationList destinationList;
+    private ArrayList<Destination> destinationList;
     private WishList wishList;
     private Info info;
     private Itinerary itinerary;
@@ -41,13 +42,13 @@ public class App {
     }
 
     private void init() {
-        destinationList = new DestinationList();
+        destinationList = new ArrayList<>();
         userInput = new Scanner(System.in);
         userInput.useDelimiter("\n");
     }
 
     private void mainMenu() {
-        if (destinationList.getList().size() == 0) {
+        if (destinationList.size() == 0) {
             System.out.println("A -> add new destination");
             System.out.println("Q -> quit");
         } else {
@@ -73,13 +74,13 @@ public class App {
         if (command.equals("B")) {
             System.out.println("How much?");
             amount = userInput.nextInt();
-            itinerary.setBudgetLeft(amount);
-            System.out.println("Remaining budget: " + itinerary.getBudgetLeft());
+            destination.getItinerary().setBudgetLeft(amount);
+            System.out.println("Remaining budget: " + destination.getBudget());
         } else if (command.equals("D")) {
             System.out.println("How much?");
             amount = userInput.nextInt();
-            itinerary.setDuration(amount);
-            System.out.println("New duration: " + itinerary.getDuration());
+            destination.getItinerary().setDuration(amount);
+            System.out.println("New duration: " + destination.getDuration() + " days");
         } else if (command.equals("W")) {
             viewWishList();
         } else if (command.equals("I")) {
@@ -114,23 +115,20 @@ public class App {
         duration = userInput.nextInt();
 
         destination = new Destination(placeName, budget, duration);
-        destinationList.addItem(destination);
-        wishList = new WishList();
-        itinerary = new Itinerary(budget, duration);
-
+        destinationList.add(destination);
         addWishList();
     }
 
     private void deleteDest() {
         String removePlace;
-        for (Destination destination: destinationList.getList()) {
+        for (Destination destination: destinationList) {
             System.out.println(destination.getPlaceName());
         }
         System.out.println("Which destination have you visited? ");
         removePlace = userInput.next().toLowerCase();
-        for (Destination destination: destinationList.getList()) {
+        for (Destination destination: destinationList) {
             if (removePlace.equals(destination.getPlaceName().toLowerCase())) {
-                destinationList.removeItem(destination);
+                destinationList.remove(destination);
                 break;
             } else {
                 System.out.println("no this destination");
@@ -140,12 +138,12 @@ public class App {
 
     private void viewDestList() {
 
-        for (int i = 0; i < destinationList.getList().size(); i++) {
-            Destination destination = destinationList.getList().get(i);
+        for (int i = 0; i < destinationList.size(); i++) {
+            Destination destination = destinationList.get(i);
             System.out.println(i + 1 + ".");
             System.out.println("Place: " + destination.getPlaceName());
-            System.out.println("Budget: " + destination.getItinerary().getBudgetLeft());
-            System.out.println("Duration: " + destination.getItinerary().getDuration() + " days");
+            System.out.println("Budget: " + destination.getBudget());
+            System.out.println("Duration: " + destination.getDuration() + " days");
         }
         afterViewDestMenu();
     }
@@ -157,15 +155,15 @@ public class App {
         System.out.println("Q -> quit");
         command = userInput.next().toUpperCase();
         if (command.equals("E")) {
-            if (destinationList.getList().size() == 1) {
+            if (destinationList.size() == 1) {
                 editDest();
             } else {
                 System.out.println("Which destination?");
                 destName = userInput.next().toLowerCase();
-                for (Destination destination : destinationList.getList()) {
+                for (Destination destination : destinationList) {
                     if (destName.equals(destination.getPlaceName().toLowerCase())) {
                         this.destination = destination;
-                        this.budget = destination.getItinerary().getBudgetLeft();
+                        this.budget = destination.getBudget();
                         this.wishList = destination.getWishList();
                         this.itinerary = destination.getItinerary();
                         editDest();
@@ -206,7 +204,7 @@ public class App {
         type = typeTemp.charAt(0);
 
         info = new Info(localPlace, cost, type);
-        wishList.addItem(info);
+        destination.getWishList().addItem(info);
 
         afterAddWL();
     }
@@ -277,7 +275,7 @@ public class App {
     }
 
     private void editingItinerary(String chooseInfo, boolean isAdd) {
-        for (Info info: wishList.getList()) {
+        for (Info info: destination.getWishList().getList()) {
             if (chooseInfo.equals(info.getDescription().toLowerCase())) {
                 if (isAdd) {
                     addToItinerary(info);
@@ -291,15 +289,15 @@ public class App {
 
     private void addToItinerary(Info info) {
         int dayNum;
-        if (itinerary.withinBudget(info)) {
+        if (destination.getItinerary().withinBudget(info)) {
             info.chooseThis();
             System.out.println("Which day?");
             dayNum = userInput.nextInt();
-            while (!itinerary.withinDuration(dayNum)) {
+            while (!destination.getItinerary().withinDuration(dayNum)) {
                 System.out.println("Input must be within duration, try again!");
                 dayNum = userInput.nextInt();
             }
-            itinerary.editItinerary(dayNum, info);
+            destination.getItinerary().editItinerary(dayNum, info);
         } else {
             System.out.println("out budget!");
         }
@@ -311,17 +309,17 @@ public class App {
         int dayNum;
         System.out.println("From which day? ");
         dayNum = userInput.nextInt();
-        itinerary.editItinerary(dayNum, info);
+        destination.getItinerary().editItinerary(dayNum, info);
 
     }
 
     private void displayBudget() {
-        System.out.println("you have $" + itinerary.getBudgetLeft() + " left");
+        System.out.println("you have $" + destination.getBudget() + " left");
     }
 
     private void displayItinerary() {
         System.out.println("Your Itinerary: ");
-        for (EachDay eachDay : itinerary.getItineraryList()) {
+        for (EachDay eachDay : destination.getItineraryElement()) {
             System.out.println(eachDay.getDayNum());
             for (Info info : eachDay.getList()) {
                 System.out.println(info.getDescription());
