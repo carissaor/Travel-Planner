@@ -7,12 +7,14 @@ public class Info {
     private char type;
     private boolean isChosen;
 
+    // EFFECTS: creates an Info object with place name, cost and category.
     public Info(String description, int cost, char type) {
         this.description = description;
         this.cost = cost;
         this.type = type;
         this.isChosen = false;
     }
+
     public void chooseThis() {
         isChosen = true;
     }

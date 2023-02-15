@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ItineraryTest {
@@ -12,14 +13,14 @@ public class ItineraryTest {
 
     @BeforeEach
     public void runBefore() {
-        testItinerary = new Itinerary(5, 1000);
+        testItinerary = new Itinerary(1000, 5);
         testData1 = new Info("description", 50, 'F');
         testData2 = new Info("description", 2000, 'A');
     }
 
     @Test
     void testConstructor() {
-        assertEquals(5,testItinerary.getItineraryList().size());
+        assertEquals(5, testItinerary.getItineraryList().size());
         assertEquals(1000, testItinerary.getBudgetLeft());
         assertEquals("Day 1", testItinerary.getItineraryList().get(0).getDayNum());
     }
@@ -31,16 +32,22 @@ public class ItineraryTest {
         assertEquals(950, testItinerary.getBudgetLeft());
     }
 
-    @Test
-    void testOutBudget() {
-        testData2.chooseThis();
-        testItinerary.editItinerary(2, testData2);
-        assertEquals(1000, testItinerary.getBudgetLeft());
-    }
 
     @Test
     void testSetBudget() {
-        testItinerary.setBudgetLeft(-20);
-        assertEquals(1000-20, testItinerary.getBudgetLeft());
+        testItinerary.setBudget(-20);
+        assertEquals(1000 - 20, testItinerary.getBudgetLeft());
+    }
+
+    @Test
+    void testSetOutBudget() {
+        testItinerary.setBudget(-2000);
+        assertEquals(0, testItinerary.getBudgetLeft());
+    }
+
+    @Test
+    void testWithinBudget() {
+        assertTrue(testItinerary.withinBudget(testData1));
+        assertFalse(testItinerary.withinBudget(testData2));
     }
 }

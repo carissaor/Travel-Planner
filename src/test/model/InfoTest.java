@@ -11,22 +11,23 @@ public class InfoTest {
 
     @BeforeEach
     public void runBefore() {
-        testInfo = new Info("Granville Island", 100, 'A');
+        testInfo = new Info("ubc", 100, 'A');
     }
 
     @Test
     void testConstructor() {
-        assertEquals("Granville Island", testInfo.getDescription());
+        assertEquals("ubc", testInfo.getDescription());
         assertEquals(100, testInfo.getCost());
+        assertEquals('A', testInfo.getType());
         assertFalse(testInfo.getIsChosen());
     }
 
     @Test
-    void addAndRemoveFromItinerary() {
+    void testToggle() {
         testInfo.chooseThis();
         assertTrue(testInfo.getIsChosen());
         testInfo.removeThis();
-        assertTrue(testInfo.getIsChosen());
+        assertFalse(testInfo.getIsChosen());
     }
 
 }

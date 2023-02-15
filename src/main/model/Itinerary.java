@@ -18,14 +18,30 @@ public class Itinerary {
         }
     }
 
+    // REQUIRES: info.getCost() <= budgetLeft
     public void editItinerary(int day, Info info) {
         if (info.getIsChosen()) {
             itineraryList.get(day - 1).addItem(info);
             budgetLeft = budgetLeft - info.getCost();
-        } else  {
+        } else if (!info.getIsChosen()) {
             itineraryList.get(day - 1).removeItem(info);
             budgetLeft = budgetLeft + info.getCost();
         }
+    }
+
+    public boolean withinBudget(Info info) {
+        return (budgetLeft - info.getCost()) > 0;
+    }
+
+    public void setBudget(int amount) {
+        budgetLeft += amount;
+        if (budgetLeft < 0) {
+            budgetLeft = 0;
+        }
+    }
+
+    public int getBudgetLeft() {
+        return budgetLeft;
     }
 
     public boolean withinDuration(int day) {
@@ -34,26 +50,18 @@ public class Itinerary {
 
     public void setDuration(int amount) {
         duration += amount;
+        if (duration < 0) {
+            duration = 0;
+        }
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public boolean withinBudget(Info info) {
-        return (budgetLeft - info.getCost()) > 0;
-    }
-
-    public void setBudgetLeft(int amount) {
-        budgetLeft += amount;
-    }
-
-    public int getBudgetLeft() {
-        return budgetLeft;
-    }
-
     public ArrayList<EachDay> getItineraryList() {
         return itineraryList;
     }
+
 }
 

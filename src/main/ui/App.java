@@ -7,11 +7,9 @@ import java.util.Scanner;
 
 public class App {
 
-    private Destination destination;
     private ArrayList<Destination> destinationList;
-    private WishList wishList;
+    private Destination destination;
     private Info info;
-    private Itinerary itinerary;
     private Scanner userInput;
     private int budget;
     private int duration;
@@ -66,27 +64,22 @@ public class App {
             deleteDest();
         } else if (command.equals("V")) {
             viewDestList();
+        } else {
+            System.out.println("Invalid input");
         }
     }
 
     private void processCommandDest(String command) {
-        int amount;
         if (command.equals("B")) {
-            System.out.println("How much?");
-            amount = userInput.nextInt();
-            destination.getItinerary().setBudgetLeft(amount);
-            System.out.println("Remaining budget: " + destination.getBudget());
+            editDestInfo(true);
         } else if (command.equals("D")) {
-            System.out.println("How much?");
-            amount = userInput.nextInt();
-            destination.getItinerary().setDuration(amount);
-            System.out.println("New duration: " + destination.getDuration() + " days");
+            editDestInfo(false);
         } else if (command.equals("W")) {
             viewWishList();
         } else if (command.equals("I")) {
             editItinerary();
         } else {
-            System.out.println("no this choice");
+            System.out.println("Invalid input");
         }
     }
 
@@ -121,12 +114,12 @@ public class App {
 
     private void deleteDest() {
         String removePlace;
-        for (Destination destination: destinationList) {
+        for (Destination destination : destinationList) {
             System.out.println(destination.getPlaceName());
         }
         System.out.println("Which destination have you visited? ");
         removePlace = userInput.next().toLowerCase();
-        for (Destination destination: destinationList) {
+        for (Destination destination : destinationList) {
             if (removePlace.equals(destination.getPlaceName().toLowerCase())) {
                 destinationList.remove(destination);
                 break;
@@ -163,9 +156,6 @@ public class App {
                 for (Destination destination : destinationList) {
                     if (destName.equals(destination.getPlaceName().toLowerCase())) {
                         this.destination = destination;
-                        this.budget = destination.getBudget();
-                        this.wishList = destination.getWishList();
-                        this.itinerary = destination.getItinerary();
                         editDest();
                         break;
                     }
@@ -173,6 +163,7 @@ public class App {
             }
         }
     }
+
 
     private void editDest() {
         String command;
@@ -184,12 +175,24 @@ public class App {
         processCommandDest(command);
     }
 
+    private void editDestInfo(boolean isBudget) {
+        System.out.println("Enter number, negative to minus amount");
+        int amount = userInput.nextInt();
+        if (isBudget) {
+            destination.getItinerary().setBudget(amount);
+            System.out.println("Budget left: " + destination.getBudget());
+        } else {
+            destination.getItinerary().setDuration(amount);
+            System.out.println("Duration: " + destination.getDuration() + " days");
+        }
+    }
+
     private void addWishList() {
         String localPlace;
         int cost;
         char type;
 
-        System.out.println("Where do you want to visit?");
+        System.out.println("Where do you want to visit in " + destination.getPlaceName() + "?");
         localPlace = userInput.next();
 
         System.out.println("What is the estimated cost?");
@@ -221,7 +224,7 @@ public class App {
     }
 
     private void viewWishList() {
-        for (Info info : wishList.getList()) {
+        for (Info info : destination.getWishList().getList()) {
             if (info.getType() == 'A') {
                 System.out.println("ACTIVITIES");
                 System.out.println(info.getDescription());
@@ -236,7 +239,6 @@ public class App {
                 System.out.println(info.getDescription());
             }
         }
-
         afterViewWL();
     }
 
@@ -262,7 +264,7 @@ public class App {
             chooseInfo = userInput.next().toLowerCase();
             editingItinerary(chooseInfo, true);
         } else if (input.equals("R")) {
-            if (!itinerary.getItineraryList().isEmpty()) {
+            if (!destination.getItineraryList().isEmpty()) {
                 System.out.println("type place name to remove");
                 chooseInfo = userInput.next().toLowerCase();
                 editingItinerary(chooseInfo, false);
@@ -275,7 +277,7 @@ public class App {
     }
 
     private void editingItinerary(String chooseInfo, boolean isAdd) {
-        for (Info info: destination.getWishList().getList()) {
+        for (Info info : destination.getWishList().getList()) {
             if (chooseInfo.equals(info.getDescription().toLowerCase())) {
                 if (isAdd) {
                     addToItinerary(info);
@@ -319,7 +321,7 @@ public class App {
 
     private void displayItinerary() {
         System.out.println("Your Itinerary: ");
-        for (EachDay eachDay : destination.getItineraryElement()) {
+        for (EachDay eachDay : destination.getItineraryList()) {
             System.out.println(eachDay.getDayNum());
             for (Info info : eachDay.getList()) {
                 System.out.println(info.getDescription());

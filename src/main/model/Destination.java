@@ -11,7 +11,7 @@ public class Destination {
     private Itinerary itinerary;
 
     // REQUIRES: budget, duration >= 0
-    // EFFECTS:
+    // EFFECTS: construct object
     public Destination(String placeName, int budget, int duration) {
         this.placeName = placeName;
         this.budget = budget;
@@ -28,10 +28,9 @@ public class Destination {
         return itinerary;
     }
 
-    public ArrayList<EachDay> getItineraryElement() {
+    public ArrayList<EachDay> getItineraryList() {
         return itinerary.getItineraryList();
     }
-
 
     public String getPlaceName() {
         return placeName;

@@ -20,4 +20,5 @@ class DestinationTest {
         assertEquals(3, testDest.getDuration());
     }
 
+
 }

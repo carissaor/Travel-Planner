@@ -1,6 +1,7 @@
 package model;
 
 import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EachDayTest {
@@ -14,36 +15,31 @@ public class EachDayTest {
         testDay = new EachDay("Day 1");
         info1 = new Info("test1", 100, 'A');
     }
+
     @Test
     void testConstructor() {
         assertEquals(0, testDay.getList().size());
+        assertEquals("Day 1", testDay.getDayNum());
     }
-//
-//    @Test
-//    void testAddInfo() {
-//        info2 = new Info("test2", 0, 'A');
-//        testDay.addInfo(info1);
-//        assertEquals(1, testDay.getDayList().size());
-//        testDay.addInfo(info2);
-//        assertEquals(2, testDay.getDayList().size());
-//        assertEquals(info2, testDay.getDayList().get(1));
-//        assertEquals("test1", testDay.getDayList().get(0).getDescription());
-//    }
-//
-//    @Test
-//    void testRemoveInfo() {
-//        testDay.addInfo(info1);
-//        testDay.removeInfo(info1);
-//        assertEquals(0, testDay.getDayList().size());
-//    }
-//
-//    @Test
-//    void testAddRemoveMultiple() {
-//        info2 = new Info("test2", 0, 'A');
-//        testDay.addInfo(info1);
-//        testDay.addInfo(info2);
-//        testDay.removeInfo(info2);
-//        assertEquals(1, testDay.getDayList().size());
-//    }
+
+    @Test
+    void testAddOne() {
+        testDay.addItem(info1);
+        assertEquals(1, testDay.getList().size());
+        assertEquals(info1, testDay.getList().get(0));
+    }
+
+    @Test
+    void testAddRemove() {
+        info2 = new Info("test2", 500, 'O');
+        testDay.addItem(info2);
+        testDay.addItem(info1);
+        assertEquals(2, testDay.getList().size());
+        assertEquals(info2, testDay.getList().get(0));
+        testDay.removeItem(info2);
+        assertEquals(info1, testDay.getList().get(0));
+    }
+
 }
+
 
