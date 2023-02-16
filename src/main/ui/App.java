@@ -5,17 +5,21 @@ import model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Represent a travel planner application
 public class App {
 
     private ArrayList<Destination> destinationList;
     private Destination destination;
-    private Info info;
+    private LocalPlace localPlace;
     private Scanner userInput;
 
+    // EFFECTS: run the application
     public App() {
         runApp();
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void runApp() {
         boolean keepGoing = true;
         String command;
@@ -37,12 +41,16 @@ public class App {
         System.out.println("Have a good trip!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: initialize a list of destination to empty
     private void init() {
         destinationList = new ArrayList<>();
         userInput = new Scanner(System.in);
         userInput.useDelimiter("\n");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void mainMenu() {
         if (destinationList.size() == 0) {
             System.out.println("A -> add new destination");
@@ -55,6 +63,8 @@ public class App {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void processCommandMain(String command) {
         if (command.equals("A")) {
             addDest();
@@ -67,6 +77,8 @@ public class App {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void processCommandDest(String command) {
         if (command.equals("B")) {
             editDestInfo(true);
@@ -81,9 +93,11 @@ public class App {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void processCommandWL(String command) {
         if (command.equals("A")) {
-            addToItinerary(info);
+            addToItinerary(localPlace);
         } else if (command.equals("M")) {
             addWishList();
         } else if (command.equals("V")) {
@@ -95,6 +109,8 @@ public class App {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: add a destination to destination list
     private void addDest() {
         String placeName;
         int budget;
@@ -114,6 +130,9 @@ public class App {
         addWishList();
     }
 
+    // REQUIRES: destination is in the destination list
+    // MODIFIES: this
+    // EFFECTS: remove a destination to destination list
     private void deleteDest() {
         String removePlace;
         for (Destination destination : destinationList) {
@@ -131,6 +150,7 @@ public class App {
         }
     }
 
+    // EFFECTS: prints the destination list
     private void viewDestList() {
 
         for (int i = 0; i < destinationList.size(); i++) {
@@ -208,8 +228,8 @@ public class App {
         String typeTemp = userInput.next().toUpperCase();
         type = typeTemp.charAt(0);
 
-        info = new Info(localPlace, cost, type);
-        destination.getWishList().addItem(info);
+        this.localPlace = new LocalPlace(localPlace, cost, type);
+        destination.getWishList().addItem(this.localPlace);
 
         afterAddWL();
     }
@@ -227,19 +247,19 @@ public class App {
 
     private void viewWishList() {
         System.out.println("ACTIVITIES");
-        for (Info details : destination.getWishList().getA()) {
+        for (LocalPlace details : destination.getWishList().getA()) {
             System.out.println(details.getDescription());
         }
         System.out.println("FOOD");
-        for (Info details : destination.getWishList().getF()) {
+        for (LocalPlace details : destination.getWishList().getF()) {
             System.out.println(details.getDescription());
         }
         System.out.println("LIVING SPACE");
-        for (Info details : destination.getWishList().getL()) {
+        for (LocalPlace details : destination.getWishList().getL()) {
             System.out.println(details.getDescription());
         }
         System.out.println("OTHERS");
-        for (Info details : destination.getWishList().getO()) {
+        for (LocalPlace details : destination.getWishList().getO()) {
             System.out.println(details.getDescription());
         }
         afterViewWL();
@@ -280,30 +300,33 @@ public class App {
         }
     }
 
+    // EFFECTS: choose operation on itinerary
     private void editingItinerary(String chooseInfo, boolean isAdd) {
-        for (Info info : destination.getWishList().getListRelated()) {
-            if (chooseInfo.equals(info.getDescription().toLowerCase())) {
+        for (LocalPlace localPlace : destination.getWishList().getListRelated()) {
+            if (chooseInfo.equals(localPlace.getDescription().toLowerCase())) {
                 if (isAdd) {
-                    addToItinerary(info);
+                    addToItinerary(localPlace);
                 } else {
-                    removeFromItinerary(info);
+                    removeFromItinerary(localPlace);
                 }
             }
         }
     }
 
 
-    private void addToItinerary(Info info) {
+    // MODIFIES: this
+    // EFFECTS: add a LocalPlace object to itinerary
+    private void addToItinerary(LocalPlace localPlace) {
         int dayNum;
-        if (destination.getItinerary().withinBudget(info)) {
-            info.chooseThis();
+        if (destination.getItinerary().withinBudget(localPlace)) {
+            localPlace.chooseThis();
             System.out.println("Which day?");
             dayNum = userInput.nextInt();
             while (!destination.getItinerary().withinDuration(dayNum)) {
                 System.out.println("Input must be within duration, try again!");
                 dayNum = userInput.nextInt();
             }
-            destination.getItinerary().editItinerary(dayNum, info);
+            destination.getItinerary().editItinerary(dayNum, localPlace);
         } else {
             System.out.println("out budget!");
         }
@@ -311,24 +334,27 @@ public class App {
         displayItinerary();
     }
 
-    private void removeFromItinerary(Info info) {
+    // MODIFIES: this
+    // EFFECTS: remove a LocalPlace object from itinerary
+    private void removeFromItinerary(LocalPlace localPlace) {
         int dayNum;
         System.out.println("From which day? ");
         dayNum = userInput.nextInt();
-        destination.getItinerary().editItinerary(dayNum, info);
-
+        destination.getItinerary().editItinerary(dayNum, localPlace);
     }
 
+    // EFFECTS: prints the current budget left
     private void displayBudget() {
         System.out.println("you have $" + destination.getBudget() + " left");
     }
 
+    // EFFECTS: prints the itinerary
     private void displayItinerary() {
         System.out.println("Your Itinerary: ");
         for (EachDay eachDay : destination.getItineraryList()) {
             System.out.println(eachDay.getText());
-            for (Info info : eachDay.getListRelated()) {
-                System.out.println(info.getDescription());
+            for (LocalPlace localPlace : eachDay.getListRelated()) {
+                System.out.println(localPlace.getDescription());
             }
         }
     }

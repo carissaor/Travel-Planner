@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ItineraryTest {
 
     Itinerary testItinerary;
-    Info testData1;
-    Info testData2;
+    LocalPlace testData1;
+    LocalPlace testData2;
 
     @BeforeEach
     public void runBefore() {
         testItinerary = new Itinerary(1000, 5);
-        testData1 = new Info("description", 50, 'F');
-        testData2 = new Info("description", 2000, 'A');
+        testData1 = new LocalPlace("description", 50, 'F');
+        testData2 = new LocalPlace("description", 2000, 'A');
     }
 
     @Test
@@ -26,7 +26,16 @@ public class ItineraryTest {
     }
 
     @Test
-    void testEditItinerary() {
+    void testAddItinerary() {
+        testData1.chooseThis();
+        testItinerary.editItinerary(5, testData1);
+        assertEquals(950, testItinerary.getBudgetLeft());
+        assertEquals("description",
+                testItinerary.getItineraryList().get(4).getListRelated().get(0).getDescription());
+    }
+
+    @Test
+    void testAddRemoveItinerary() {
         testData1.chooseThis();
         testItinerary.editItinerary(2, testData1);
         assertEquals(950, testItinerary.getBudgetLeft());

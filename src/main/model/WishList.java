@@ -3,50 +3,50 @@ package model;
 import java.util.ArrayList;
 
 // Represent the information researched by users regarding a particular destination
-public class WishList extends ListRelated<Info> {
+public class WishList extends ListRelated<LocalPlace> {
 
     // EFFECTS: return an array list containing information in the activities category
-    public ArrayList<Info> getA() {
-        ArrayList<Info> infoA = new ArrayList<>();
-        for (Info info : super.getListRelated()) {
-            if (info.getType() == 'A') {
-                infoA.add(info);
+    public ArrayList<LocalPlace> getA() {
+        ArrayList<LocalPlace> localPlaceA = new ArrayList<>();
+        for (LocalPlace localPlace : super.getListRelated()) {
+            if (localPlace.getType() == 'A') {
+                localPlaceA.add(localPlace);
             }
         }
-        return infoA;
+        return localPlaceA;
     }
 
     // EFFECTS: return an array list containing information in the food category
-    public ArrayList<Info> getF() {
-        ArrayList<Info> infoF = new ArrayList<>();
-        for (Info info : super.getListRelated()) {
-            if (info.getType() == 'F') {
-                infoF.add(info);
+    public ArrayList<LocalPlace> getF() {
+        ArrayList<LocalPlace> localPlaceF = new ArrayList<>();
+        for (LocalPlace localPlace : super.getListRelated()) {
+            if (localPlace.getType() == 'F') {
+                localPlaceF.add(localPlace);
             }
         }
-        return infoF;
+        return localPlaceF;
     }
 
     // EFFECTS: return an array list containing information in the living space category
-    public ArrayList<Info> getL() {
-        ArrayList<Info> infoL = new ArrayList<>();
-        for (Info info : super.getListRelated()) {
-            if (info.getType() == 'L') {
-                infoL.add(info);
+    public ArrayList<LocalPlace> getL() {
+        ArrayList<LocalPlace> localPlaceL = new ArrayList<>();
+        for (LocalPlace localPlace : super.getListRelated()) {
+            if (localPlace.getType() == 'L') {
+                localPlaceL.add(localPlace);
             }
         }
-        return infoL;
+        return localPlaceL;
     }
 
     // EFFECTS: return an array list containing information in the others category
-    public ArrayList<Info> getO() {
-        ArrayList<Info> infoO = new ArrayList<>();
-        for (Info info : super.getListRelated()) {
-            if (info.getType() == 'O') {
-                infoO.add(info);
+    public ArrayList<LocalPlace> getO() {
+        ArrayList<LocalPlace> localPlaceO = new ArrayList<>();
+        for (LocalPlace localPlace : super.getListRelated()) {
+            if (localPlace.getType() == 'O') {
+                localPlaceO.add(localPlace);
             }
         }
-        return infoO;
+        return localPlaceO;
     }
 }
 

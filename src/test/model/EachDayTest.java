@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EachDayTest {
 
     EachDay testDay;
-    Info info1;
-    Info info2;
+    LocalPlace localPlace1;
+    LocalPlace localPlace2;
 
     @BeforeEach
     public void runBefore() {
         testDay = new EachDay("Day 1");
-        info1 = new Info("test1", 100, 'A');
+        localPlace1 = new LocalPlace("test1", 100, 'A');
     }
 
     @Test
@@ -24,20 +24,20 @@ public class EachDayTest {
 
     @Test
     void testAddOne() {
-        testDay.addItem(info1);
+        testDay.addItem(localPlace1);
         assertEquals(1, testDay.getListRelated().size());
-        assertEquals(info1, testDay.getListRelated().get(0));
+        assertEquals(localPlace1, testDay.getListRelated().get(0));
     }
 
     @Test
     void testAddRemove() {
-        info2 = new Info("test2", 500, 'O');
-        testDay.addItem(info2);
-        testDay.addItem(info1);
+        localPlace2 = new LocalPlace("test2", 500, 'O');
+        testDay.addItem(localPlace2);
+        testDay.addItem(localPlace1);
         assertEquals(2, testDay.getListRelated().size());
-        assertEquals(info2, testDay.getListRelated().get(0));
-        testDay.removeItem(info2);
-        assertEquals(info1, testDay.getListRelated().get(0));
+        assertEquals(localPlace2, testDay.getListRelated().get(0));
+        testDay.removeItem(localPlace2);
+        assertEquals(localPlace1, testDay.getListRelated().get(0));
     }
 
 }

@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WishListTest {
 
     WishList testWishList;
-    Info testData1;
-    Info testData2;
-    Info testData3;
-    Info testData4;
+    LocalPlace testData1;
+    LocalPlace testData2;
+    LocalPlace testData3;
+    LocalPlace testData4;
 
 
     @BeforeEach
     public void runBefore() {
         testWishList = new WishList();
-        testData1 = new Info("Steam Clock", 0, 'A');
-        testData2 = new Info("Granville Island", 100, 'F');
+        testData1 = new LocalPlace("Steam Clock", 0, 'A');
+        testData2 = new LocalPlace("Granville Island", 100, 'F');
     }
 
     @Test
@@ -48,8 +48,8 @@ public class WishListTest {
 
     @Test
     public void testGetType() {
-        testData3 = new Info("Hotel", 0, 'L');
-        testData4 = new Info("UBC", 100, 'O');
+        testData3 = new LocalPlace("Hotel", 300, 'L');
+        testData4 = new LocalPlace("UBC", 100, 'O');
         testWishList.addItem(testData1);
         testWishList.addItem(testData2);
         testWishList.addItem(testData3);
@@ -59,6 +59,8 @@ public class WishListTest {
         assertEquals("Granville Island", testWishList.getF().get(0).getDescription());
         assertEquals(0, testWishList.getL().size());
         assertEquals("UBC", testWishList.getO().get(0).getDescription());
+        testWishList.removeItem(testData3);
+        assertEquals(300, testWishList.getL().get(0).getCost());
     }
 
 }

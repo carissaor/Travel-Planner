@@ -1,6 +1,7 @@
 package model;
 
-public class Info {
+// Represent a place/ activity in destination
+public class LocalPlace {
 
     private String description;
     private int cost;
@@ -9,7 +10,7 @@ public class Info {
 
     // EFFECTS: creates an Info object with place name, cost, category
     // and by default it is not added to itinerary.
-    public Info(String description, int cost, char type) {
+    public LocalPlace(String description, int cost, char type) {
         this.description = description;
         this.cost = cost;
         this.type = type;

@@ -1,7 +1,7 @@
 package model;
 
 // Represents each day in the itinerary
-public class EachDay extends ListRelated<Info> {
+public class EachDay extends ListRelated<LocalPlace> {
 
     private String text;
 

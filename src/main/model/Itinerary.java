@@ -22,21 +22,23 @@ public class Itinerary {
         }
     }
 
-    // REQUIRES: 1 <= day <= duration, info.getCost() <= budgetLeft
-    // EFFECTS:
-    public void editItinerary(int day, Info info) {
-        if (info.getIsChosen()) {
-            itineraryList.get(day - 1).addItem(info);
-            budgetLeft = budgetLeft - info.getCost();
-        } else if (!info.getIsChosen()) {
-            itineraryList.get(day - 1).removeItem(info);
-            budgetLeft = budgetLeft + info.getCost();
+    // REQUIRES: 1 <= day <= duration, info.getCost() <= budgetLeft,
+    // if LocalPlace IsChosen is false, the LocalPlace should be in itinerary already
+    // EFFECTS: If the local place is chosen, add to itinerary according to day number and minus budget by the cost
+    // Otherwise, remove it from the itinerary and add cost to budget.
+    public void editItinerary(int day, LocalPlace localPlace) {
+        if (localPlace.getIsChosen()) {
+            itineraryList.get(day - 1).addItem(localPlace);
+            budgetLeft = budgetLeft - localPlace.getCost();
+        } else if (!localPlace.getIsChosen()) {
+            itineraryList.get(day - 1).removeItem(localPlace);
+            budgetLeft = budgetLeft + localPlace.getCost();
         }
     }
 
     // EFFECTS: return true if the cost of info is smaller than budgetLeft.
-    public boolean withinBudget(Info info) {
-        return (budgetLeft - info.getCost()) > 0;
+    public boolean withinBudget(LocalPlace localPlace) {
+        return (budgetLeft - localPlace.getCost()) > 0;
     }
 
     // MODIFIES: this
