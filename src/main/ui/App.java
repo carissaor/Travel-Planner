@@ -11,8 +11,6 @@ public class App {
     private Destination destination;
     private Info info;
     private Scanner userInput;
-    //    private int budget;
-    private int duration;
 
     public App() {
         runApp();
@@ -92,16 +90,15 @@ public class App {
             viewWishList();
         } else if (command.equals("E")) {
             editItinerary();
-        } else if (command.equals("Q")) {
-            mainMenu();
         } else {
-            System.out.println("Invalid input");
+            System.out.println("Invalid input, redirect to main...");
         }
     }
 
     private void addDest() {
         String placeName;
         int budget;
+        int duration;
 
         System.out.println("Where do you want to visit? ");
         placeName = userInput.next().toLowerCase();

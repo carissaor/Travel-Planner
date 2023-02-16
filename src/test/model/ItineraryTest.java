@@ -57,10 +57,19 @@ public class ItineraryTest {
     }
 
     @Test
-    void testReduceDuration() {
+    void testSetNegativeDuration() {
+        testItinerary.setDuration(-90);
+        assertEquals(1, testItinerary.getDuration());
+        assertEquals(1, testItinerary.getItineraryList().size());
+    }
+
+    @Test
+    void testSetDuration() {
         testItinerary.setDuration(-2);
+        assertEquals(3, testItinerary.getDuration());
         assertEquals(3, testItinerary.getItineraryList().size());
         testItinerary.setDuration(2);
+        assertEquals(5, testItinerary.getDuration());
         assertEquals(5, testItinerary.getItineraryList().size());
         assertEquals("Day 5", testItinerary.getItineraryList().get(4).getText());
     }

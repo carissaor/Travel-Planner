@@ -53,14 +53,21 @@ public class Itinerary {
         return budgetLeft;
     }
 
-    public boolean withinDuration(int day) {
-        return day > 0 && day <= itineraryList.size();
+    // EFFECTS: return true is the day number is larger than 0 and smaller than the size of itinerary list.
+    //          false otherwise.
+    public boolean withinDuration(int dayNum) {
+        return dayNum > 0 && dayNum <= itineraryList.size();
     }
 
+    // EFFECTS: add or minus duration by amount, add or remove EachDay object from the array list accordingly.
+    //          since minimum duration is 1 day, if duration is smaller than 1, duration will be set to 1 instead.
     public void setDuration(int amount) {
         duration += amount;
-        if (duration < 0) {
+        if (duration < 1) {
             duration = 1;
+            for (int i = itineraryList.size() - 1; i >= 1; i--) {
+                itineraryList.remove(itineraryList.get(i));
+            }
         } else {
             if (amount < 0) {
                 for (int i = itineraryList.size() - 1; i >= duration; i--) {
