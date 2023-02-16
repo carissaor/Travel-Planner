@@ -145,7 +145,7 @@ public class App {
                 destinationList.remove(destination);
                 break;
             } else {
-                System.out.println("no this destination");
+                System.out.println("Invalid input");
             }
         }
     }
@@ -163,6 +163,8 @@ public class App {
         afterViewDestMenu();
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void afterViewDestMenu() {
         String command;
         String destName;
@@ -187,6 +189,8 @@ public class App {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void editDest() {
         String command;
         System.out.println("B -> budget");
@@ -197,8 +201,10 @@ public class App {
         processCommandDest(command);
     }
 
+    // MODIFIES: this
+    // EFFECTS: change and print amendments in budget or duration
     private void editDestInfo(boolean isBudget) {
-        System.out.println("Enter number, negative to minus amount");
+        System.out.println("Enter amount: ");
         int amount = userInput.nextInt();
         if (isBudget) {
             destination.getItinerary().setBudget(amount);
@@ -209,6 +215,8 @@ public class App {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: add a LocalPlace object to wishlist
     private void addWishList() {
         String localPlace;
         int cost;
@@ -234,6 +242,8 @@ public class App {
         afterAddWL();
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void afterAddWL() {
         String command;
         System.out.println("Do you want to...");
@@ -245,6 +255,7 @@ public class App {
         processCommandWL(command);
     }
 
+    // EFFECTS: Wish list according to category
     private void viewWishList() {
         System.out.println("ACTIVITIES");
         for (LocalPlace details : destination.getWishList().getA()) {
@@ -265,7 +276,8 @@ public class App {
         afterViewWL();
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void afterViewWL() {
         String command;
         System.out.println("Do you want to...");
@@ -277,6 +289,8 @@ public class App {
         processCommandWL(command);
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void editItinerary() {
         String chooseInfo;
         System.out.println("A -> add place to itinerary");
@@ -328,7 +342,7 @@ public class App {
             }
             destination.getItinerary().editItinerary(dayNum, localPlace);
         } else {
-            System.out.println("out budget!");
+            System.out.println("Out budget!");
         }
         displayBudget();
         displayItinerary();

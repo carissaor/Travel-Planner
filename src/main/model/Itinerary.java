@@ -30,7 +30,7 @@ public class Itinerary {
         if (localPlace.getIsChosen()) {
             itineraryList.get(day - 1).addItem(localPlace);
             budgetLeft = budgetLeft - localPlace.getCost();
-        } else if (!localPlace.getIsChosen()) {
+        } else {
             itineraryList.get(day - 1).removeItem(localPlace);
             budgetLeft = budgetLeft + localPlace.getCost();
         }
@@ -38,7 +38,7 @@ public class Itinerary {
 
     // EFFECTS: return true if the cost of info is smaller than budgetLeft.
     public boolean withinBudget(LocalPlace localPlace) {
-        return (budgetLeft - localPlace.getCost()) > 0;
+        return (budgetLeft - localPlace.getCost()) >= 0;
     }
 
     // MODIFIES: this
