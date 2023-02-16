@@ -63,7 +63,7 @@ public class App {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS: processes user input in main level
     private void processCommandMain(String command) {
         if (command.equals("A")) {
             addDest();
@@ -77,7 +77,7 @@ public class App {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS: processes user input in destination level
     private void processCommandDest(String command) {
         if (command.equals("B")) {
             editDestInfo(true);
@@ -93,7 +93,7 @@ public class App {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS: processes user input in wishlist level
     private void processCommandWL(String command) {
         if (command.equals("A")) {
             addToItinerary(localPlace);
