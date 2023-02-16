@@ -227,19 +227,19 @@ public class App {
 
     private void viewWishList() {
         System.out.println("ACTIVITIES");
-        for (Info details: destination.getWishList().getA()) {
+        for (Info details : destination.getWishList().getA()) {
             System.out.println(details.getDescription());
         }
         System.out.println("FOOD");
-        for (Info details: destination.getWishList().getF()) {
+        for (Info details : destination.getWishList().getF()) {
             System.out.println(details.getDescription());
         }
         System.out.println("LIVING SPACE");
-        for (Info details: destination.getWishList().getL()) {
+        for (Info details : destination.getWishList().getL()) {
             System.out.println(details.getDescription());
         }
         System.out.println("OTHERS");
-        for (Info details: destination.getWishList().getO()) {
+        for (Info details : destination.getWishList().getO()) {
             System.out.println(details.getDescription());
         }
         afterViewWL();

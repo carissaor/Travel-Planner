@@ -55,10 +55,10 @@ public class WishListTest {
         testWishList.addItem(testData3);
         testWishList.removeItem(testData3);
         testWishList.addItem(testData4);
-        assertEquals(1,testWishList.getA().size());
-        assertEquals("Granville Island",testWishList.getF().get(0).getDescription());
+        assertEquals(1, testWishList.getA().size());
+        assertEquals("Granville Island", testWishList.getF().get(0).getDescription());
         assertEquals(0, testWishList.getL().size());
-        assertEquals("UBC",testWishList.getO().get(0).getDescription());
+        assertEquals("UBC", testWishList.getO().get(0).getDescription());
     }
 
 }
