@@ -2,28 +2,31 @@ package model;
 
 import java.util.ArrayList;
 
+// A subclass for WishList and EachDay as the two classes both have an array list and similar behavior
 public class ListRelated<T> {
-    public ArrayList<T> list;
+    private ArrayList<T> listRelated;
 
-    // EFFECTS: construct object with empty array list
+    // EFFECTS: construct ListRelated object with empty array list
     public ListRelated() {
-        list = new ArrayList<>();
+        listRelated = new ArrayList<>();
     }
 
-    // REQUIRES: type not in list
+    // MODIFIES: this
+    // EFFECTS: add type to array list
     public void addItem(T type) {
-        list.add(type);
+        listRelated.add(type);
     }
 
-    // REQUIRES: type in list
+    // REQUIRES: type is in the array list
+    // MODIFIES: this
+    // EFFECTS: remove type from the array list
     public void removeItem(T type) {
-        list.remove(type);
+        listRelated.remove(type);
     }
 
-    public ArrayList<T> getList() {
-        return list;
+    public ArrayList<T> getListRelated() {
+        return listRelated;
     }
-
 
 }
 

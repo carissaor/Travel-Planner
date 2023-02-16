@@ -281,7 +281,7 @@ public class App {
     }
 
     private void editingItinerary(String chooseInfo, boolean isAdd) {
-        for (Info info : destination.getWishList().getList()) {
+        for (Info info : destination.getWishList().getListRelated()) {
             if (chooseInfo.equals(info.getDescription().toLowerCase())) {
                 if (isAdd) {
                     addToItinerary(info);
@@ -327,7 +327,7 @@ public class App {
         System.out.println("Your Itinerary: ");
         for (EachDay eachDay : destination.getItineraryList()) {
             System.out.println(eachDay.getText());
-            for (Info info : eachDay.getList()) {
+            for (Info info : eachDay.getListRelated()) {
                 System.out.println(info.getDescription());
             }
         }

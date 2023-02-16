@@ -18,15 +18,15 @@ public class EachDayTest {
 
     @Test
     void testConstructor() {
-        assertEquals(0, testDay.getList().size());
+        assertEquals(0, testDay.getListRelated().size());
         assertEquals("Day 1", testDay.getText());
     }
 
     @Test
     void testAddOne() {
         testDay.addItem(info1);
-        assertEquals(1, testDay.getList().size());
-        assertEquals(info1, testDay.getList().get(0));
+        assertEquals(1, testDay.getListRelated().size());
+        assertEquals(info1, testDay.getListRelated().get(0));
     }
 
     @Test
@@ -34,10 +34,10 @@ public class EachDayTest {
         info2 = new Info("test2", 500, 'O');
         testDay.addItem(info2);
         testDay.addItem(info1);
-        assertEquals(2, testDay.getList().size());
-        assertEquals(info2, testDay.getList().get(0));
+        assertEquals(2, testDay.getListRelated().size());
+        assertEquals(info2, testDay.getListRelated().get(0));
         testDay.removeItem(info2);
-        assertEquals(info1, testDay.getList().get(0));
+        assertEquals(info1, testDay.getListRelated().get(0));
     }
 
 }

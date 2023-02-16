@@ -22,20 +22,20 @@ public class WishListTest {
 
     @Test
     public void testConstructor() {
-        assertEquals(0, testWishList.getList().size());
+        assertEquals(0, testWishList.getListRelated().size());
     }
 
     @Test
     public void testAddOne() {
         testWishList.addItem(testData1);
-        assertEquals(1, testWishList.getList().size());
+        assertEquals(1, testWishList.getListRelated().size());
     }
 
     @Test
     public void testAddMultiple() {
         testWishList.addItem(testData1);
         testWishList.addItem(testData2);
-        assertEquals(2, testWishList.getList().size());
+        assertEquals(2, testWishList.getListRelated().size());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class WishListTest {
         testWishList.addItem(testData1);
         testWishList.addItem(testData2);
         testWishList.removeItem(testData2);
-        assertEquals(1, testWishList.getList().size());
+        assertEquals(1, testWishList.getListRelated().size());
     }
 
     @Test
