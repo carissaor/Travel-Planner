@@ -1,16 +1,18 @@
 package model;
 
+// Represents each day in the itinerary
 public class EachDay extends ListRelated<Info> {
 
-    private String dayNum;
+    private String text;
 
-    // EFFECTS: creates an dayNum object with an empty array list and dayNum
-    public EachDay(String dayNum) {
+    // EFFECTS: creates an dayNum object with an empty array list and text stating the day number.
+    public EachDay(String text) {
         super();
-        this.dayNum = dayNum;
+        this.text = text;
     }
 
-    public String getDayNum() {
-        return dayNum;
+    public String getText() {
+        return text;
     }
+
 }

@@ -11,7 +11,7 @@ public class App {
     private Destination destination;
     private Info info;
     private Scanner userInput;
-    private int budget;
+    //    private int budget;
     private int duration;
 
     public App() {
@@ -92,11 +92,16 @@ public class App {
             viewWishList();
         } else if (command.equals("E")) {
             editItinerary();
+        } else if (command.equals("Q")) {
+            mainMenu();
+        } else {
+            System.out.println("Invalid input");
         }
     }
 
     private void addDest() {
         String placeName;
+        int budget;
 
         System.out.println("Where do you want to visit? ");
         placeName = userInput.next().toLowerCase();
@@ -322,7 +327,7 @@ public class App {
     private void displayItinerary() {
         System.out.println("Your Itinerary: ");
         for (EachDay eachDay : destination.getItineraryList()) {
-            System.out.println(eachDay.getDayNum());
+            System.out.println(eachDay.getText());
             for (Info info : eachDay.getList()) {
                 System.out.println(info.getDescription());
             }

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents itinerary during user's visit to a destination.
 public class Itinerary {
 
     private ArrayList<EachDay> itineraryList;
@@ -9,6 +10,9 @@ public class Itinerary {
     private int duration;
     private static final String TEXT = "Day ";
 
+    // REQUIRES: budget >= 100, duration >= 1
+    // EFFECTS: constructs an Itinerary object with initial budget, duration and
+    // an array list of object EachDay with the size equals to duration.
     public Itinerary(int budget, int duration) {
         this.budgetLeft = budget;
         this.duration = duration;
@@ -18,7 +22,8 @@ public class Itinerary {
         }
     }
 
-    // REQUIRES: info.getCost() <= budgetLeft
+    // REQUIRES: 1 <= day <= duration, info.getCost() <= budgetLeft
+    // EFFECTS:
     public void editItinerary(int day, Info info) {
         if (info.getIsChosen()) {
             itineraryList.get(day - 1).addItem(info);
@@ -29,10 +34,14 @@ public class Itinerary {
         }
     }
 
+    // EFFECTS: return true if the cost of info is smaller than budgetLeft.
     public boolean withinBudget(Info info) {
         return (budgetLeft - info.getCost()) > 0;
     }
 
+    // MODIFIES: this
+    // EFFECTS: add or minus budget according to amount.
+    // If after adjustment, budgetLeft is a negative integer, 0 will be stored instead.
     public void setBudget(int amount) {
         budgetLeft += amount;
         if (budgetLeft < 0) {
@@ -51,7 +60,17 @@ public class Itinerary {
     public void setDuration(int amount) {
         duration += amount;
         if (duration < 0) {
-            duration = 0;
+            duration = 1;
+        } else {
+            if (amount < 0) {
+                for (int i = itineraryList.size() - 1; i >= duration; i--) {
+                    itineraryList.remove(itineraryList.get(i));
+                }
+            } else {
+                for (int i = itineraryList.size(); i < duration; i++) {
+                    itineraryList.add(new EachDay(TEXT + (i + 1)));
+                }
+            }
         }
     }
 

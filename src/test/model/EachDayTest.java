@@ -19,7 +19,7 @@ public class EachDayTest {
     @Test
     void testConstructor() {
         assertEquals(0, testDay.getList().size());
-        assertEquals("Day 1", testDay.getDayNum());
+        assertEquals("Day 1", testDay.getText());
     }
 
     @Test

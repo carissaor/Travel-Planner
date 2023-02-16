@@ -2,22 +2,39 @@ package model;
 
 import java.util.ArrayList;
 
+// Represent a country/ city user want to visit in the future.
 public class Destination {
 
     private String placeName;
-    private int duration;
-    private int budget;
     private WishList wishList;
     private Itinerary itinerary;
 
-    // REQUIRES: budget, duration >= 0
-    // EFFECTS: construct object
+    // REQUIRES: budget, duration >= 100
+    // EFFECTS: construct object Destination with place name, empty wishlist
+    //          and itinerary with budget and duration of stay.
     public Destination(String placeName, int budget, int duration) {
         this.placeName = placeName;
-        this.budget = budget;
-        this.duration = duration;
         this.wishList = new WishList();
         this.itinerary = new Itinerary(budget, duration);
+    }
+
+    // EFFECTS: get array list stored in itinerary.
+    public ArrayList<EachDay> getItineraryList() {
+        return itinerary.getItineraryList();
+    }
+
+    // EFFECTS: get the amount of current budget in itinerary.
+    public int getBudget() {
+        return itinerary.getBudgetLeft();
+    }
+
+    // EFFECTS: get the amount of duration of stay in itinerary.
+    public int getDuration() {
+        return itinerary.getDuration();
+    }
+
+    public String getPlaceName() {
+        return placeName;
     }
 
     public WishList getWishList() {
@@ -26,22 +43,6 @@ public class Destination {
 
     public Itinerary getItinerary() {
         return itinerary;
-    }
-
-    public ArrayList<EachDay> getItineraryList() {
-        return itinerary.getItineraryList();
-    }
-
-    public String getPlaceName() {
-        return placeName;
-    }
-
-    public int getBudget() {
-        return itinerary.getBudgetLeft();
-    }
-
-    public int getDuration() {
-        return itinerary.getDuration();
     }
 }
 

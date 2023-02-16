@@ -22,32 +22,46 @@ public class ItineraryTest {
     void testConstructor() {
         assertEquals(5, testItinerary.getItineraryList().size());
         assertEquals(1000, testItinerary.getBudgetLeft());
-        assertEquals("Day 1", testItinerary.getItineraryList().get(0).getDayNum());
+        assertEquals("Day 5", testItinerary.getItineraryList().get(4).getText());
     }
 
     @Test
-    void testAddItinerary() {
+    void testEditItinerary() {
         testData1.chooseThis();
         testItinerary.editItinerary(2, testData1);
         assertEquals(950, testItinerary.getBudgetLeft());
-    }
-
-
-    @Test
-    void testSetBudget() {
-        testItinerary.setBudget(-20);
-        assertEquals(1000 - 20, testItinerary.getBudgetLeft());
-    }
-
-    @Test
-    void testSetOutBudget() {
-        testItinerary.setBudget(-2000);
-        assertEquals(0, testItinerary.getBudgetLeft());
+        testData1.removeThis();
+        testItinerary.editItinerary(2, testData1);
+        assertEquals(1000, testItinerary.getBudgetLeft());
     }
 
     @Test
     void testWithinBudget() {
         assertTrue(testItinerary.withinBudget(testData1));
         assertFalse(testItinerary.withinBudget(testData2));
+    }
+
+    @Test
+    void testSetBudget() {
+        testItinerary.setBudget(-20);
+        assertEquals(1000 - 20, testItinerary.getBudgetLeft());
+        testItinerary.setBudget(-1000);
+        assertEquals(0, testItinerary.getBudgetLeft());
+    }
+
+    @Test
+    void testWithinDuration() {
+        assertFalse(testItinerary.withinDuration(-1));
+        assertTrue(testItinerary.withinDuration(5));
+        assertFalse(testItinerary.withinDuration(6));
+    }
+
+    @Test
+    void testReduceDuration() {
+        testItinerary.setDuration(-2);
+        assertEquals(3, testItinerary.getItineraryList().size());
+        testItinerary.setDuration(2);
+        assertEquals(5, testItinerary.getItineraryList().size());
+        assertEquals("Day 5", testItinerary.getItineraryList().get(4).getText());
     }
 }
