@@ -19,6 +19,8 @@ class DestinationTest {
         assertEquals("Vancouver", testDest.getPlaceName());
         assertEquals(1000, testDest.getBudget());
         assertEquals(10, testDest.getDuration());
+        assertEquals(0, testDest.getWishList().getList().size());
+        assertEquals(10, testDest.getItinerary().getItineraryList().size());
     }
 
     @Test

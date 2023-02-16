@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class ListRelated<T> {
-    private ArrayList<T> list;
+    public ArrayList<T> list;
 
     // EFFECTS: construct object with empty array list
     public ListRelated() {

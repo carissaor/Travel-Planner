@@ -226,23 +226,25 @@ public class App {
     }
 
     private void viewWishList() {
-        for (Info info : destination.getWishList().getList()) {
-            if (info.getType() == 'A') {
-                System.out.println("ACTIVITIES");
-                System.out.println(info.getDescription());
-            } else if (info.getType() == 'F') {
-                System.out.println("FOOD");
-                System.out.println(info.getDescription());
-            } else if (info.getType() == 'L') {
-                System.out.println("LIVING SPACE");
-                System.out.println(info.getDescription());
-            } else {
-                System.out.println("OTHERS");
-                System.out.println(info.getDescription());
-            }
+        System.out.println("ACTIVITIES");
+        for (Info details: destination.getWishList().getA()) {
+            System.out.println(details.getDescription());
+        }
+        System.out.println("FOOD");
+        for (Info details: destination.getWishList().getF()) {
+            System.out.println(details.getDescription());
+        }
+        System.out.println("LIVING SPACE");
+        for (Info details: destination.getWishList().getL()) {
+            System.out.println(details.getDescription());
+        }
+        System.out.println("OTHERS");
+        for (Info details: destination.getWishList().getO()) {
+            System.out.println(details.getDescription());
         }
         afterViewWL();
     }
+
 
     private void afterViewWL() {
         String command;
