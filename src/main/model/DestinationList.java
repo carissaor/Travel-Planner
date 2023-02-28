@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.ArrayList;
+
 public class DestinationList extends ListRelated<Destination> implements Writable {
 
     private String name;
@@ -12,6 +14,7 @@ public class DestinationList extends ListRelated<Destination> implements Writabl
         super();
         this.name = name;
     }
+
 
     public String getName() {
         return name;

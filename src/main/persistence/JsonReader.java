@@ -63,7 +63,58 @@ public class JsonReader {
         Integer budget = jsonObject.getInt("budget");
         Integer duration = jsonObject.getInt("duration");
         Destination destination = new Destination(name, budget, duration);
+        addItineraries(destination, jsonObject);
+        addWishLists(destination, jsonObject);
         dl.addItem(destination);
+    }
+
+    private void addItineraries(Destination destination, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("itinerary");
+        for (Object json : jsonArray) {
+            JSONObject nextItinerary = (JSONObject) json;
+            addItinerary(destination, nextItinerary);
+        }
+    }
+
+    private void addItinerary(Destination destination, JSONObject jsonObject) {
+        Itinerary itinerary = destination.getItinerary();
+        addEachDays(itinerary, jsonObject);
+    }
+
+    private void addEachDays(Itinerary itinerary, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("each day");
+        for (Object json : jsonArray) {
+            JSONObject nextDay = (JSONObject) json;
+            addEachDay(itinerary, nextDay);
+        }
+    }
+
+    private void addEachDay(Itinerary itinerary, JSONObject jsonObject) {
+        String text = jsonObject.getString("description");
+//        Integer dayNum = jsonObject.getInt("day num");
+        EachDay eachDay = new EachDay(text);
+        addLocalPlaceItinerary(eachDay, jsonObject);
+    }
+
+    private void addLocalPlaceItinerary(EachDay eachDay, JSONObject jsonObject) {
+        String description = jsonObject.getString("description");
+        Integer cost = jsonObject.getInt("cost");
+        Category category = Category.valueOf(jsonObject.getString("category"));
+        LocalPlace localPlace = new LocalPlace(description, cost, category);
+        eachDay.addItem(localPlace);
+    }
+
+    private void addWishLists(Destination destination, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("wishlist");
+        for (Object json : jsonArray) {
+            JSONObject nextWishList = (JSONObject) json;
+            addWishList(destination, nextWishList);
+        }
+    }
+
+    private void addWishList(Destination destination, JSONObject jsonObject) {
+        WishList wishList = destination.getWishList();
+        addLocalPlace(wishList, jsonObject);
     }
 
     private void addLocalPlace(WishList wl, JSONObject jsonObject) {
@@ -72,7 +123,5 @@ public class JsonReader {
         Category category = Category.valueOf(jsonObject.getString("category"));
         LocalPlace localPlace = new LocalPlace(description, cost, category);
         wl.addItem(localPlace);
-
     }
-
 }

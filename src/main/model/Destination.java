@@ -45,6 +45,10 @@ public class Destination implements Writable {
         return wishList;
     }
 
+    public void setWishList(WishList wishList) {
+        this.wishList = wishList;
+    }
+
     public Itinerary getItinerary() {
         return itinerary;
     }

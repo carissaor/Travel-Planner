@@ -10,7 +10,7 @@ public class WishList extends ListRelated<LocalPlace> implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject jo = new JSONObject();
-        jo.put("local place", toJsonArray());
+        jo.put("wishlist", toJsonArray());
         return jo;
     }
 

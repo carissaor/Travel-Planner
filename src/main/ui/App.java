@@ -95,13 +95,13 @@ public class App {
 
     // MODIFIES: this
     // EFFECTS: processes user input in destination level
-    private void processCommandDest(String command) {
+    private void processCommandDest(Destination destination, String command) {
         if (command.equals("B")) {
             editDestInfo(true);
         } else if (command.equals("D")) {
             editDestInfo(false);
         } else if (command.equals("W")) {
-            viewWishList();
+            viewWishList(destination);
         } else if (command.equals("I")) {
             editItinerary();
         } else {
@@ -116,8 +116,8 @@ public class App {
             addToItinerary(localPlace);
         } else if (command.equals("M")) {
             addWishList();
-        } else if (command.equals("V")) {
-            viewWishList();
+//        } else if (command.equals("V")) {
+//            viewWishList(destination);
         } else if (command.equals("E")) {
             editItinerary();
         } else {
@@ -194,14 +194,14 @@ public class App {
         command = userInput.next().toUpperCase();
         if (command.equals("E")) {
             if (dl.size() == 1) {
-                editDest();
+                editDest(destinationList.getListRelated().get(0));
             } else {
                 System.out.println("Which destination?");
                 destName = userInput.next().toLowerCase();
                 for (Destination destination : dl) {
                     if (destName.equals(destination.getPlaceName().toLowerCase())) {
                         this.destination = destination;
-                        editDest();
+                        editDest(destination);
                         break;
                     }
                 }
@@ -212,19 +212,20 @@ public class App {
 
     // MODIFIES: this
     // EFFECTS: processes user input
-    private void editDest() {
+    private void editDest(Destination destination) {
         String command;
         System.out.println("B -> budget");
         System.out.println("D -> duration");
         System.out.println("W -> wishlist");
         System.out.println("I -> Itinerary");
         command = userInput.next().toUpperCase();
-        processCommandDest(command);
+        processCommandDest(destination, command);
     }
 
     // MODIFIES: this
     // EFFECTS: change and print amendments in budget or duration
     private void editDestInfo(boolean isBudget) {
+
         System.out.println("Enter amount: ");
         int amount = userInput.nextInt();
         if (isBudget) {
@@ -288,7 +289,7 @@ public class App {
         processCommandWL(command);
     }
 
-    private void viewWishList() {
+    private void viewWishList(Destination destination) {
         ArrayList<LocalPlace> wishList = destination.getWishList().getListRelated();
 
         for (LocalPlace localPlace : wishList) {
@@ -371,7 +372,7 @@ public class App {
         System.out.println("V -> view itinerary");
         String input = userInput.next().toUpperCase();
         if (input.equals("A")) {
-            viewWishList();
+//            viewWishList();
             System.out.println("Which place would you like to add to itinerary?");
             chooseInfo = userInput.next().toLowerCase();
             editingItinerary(chooseInfo, true);
