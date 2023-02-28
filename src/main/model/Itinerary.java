@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents itinerary during user's visit to a destination.
-public class Itinerary {
+public class Itinerary implements Writable {
 
     private ArrayList<EachDay> itineraryList;
     private int budgetLeft;
@@ -91,5 +95,23 @@ public class Itinerary {
         return itineraryList;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("itinerary", toJsonArray());
+        jo.put("budget", budgetLeft);
+        jo.put("duration", duration);
+        return jo;
+    }
+
+    private JSONArray toJsonArray() {
+        JSONArray ja = new JSONArray();
+
+        for (EachDay d : itineraryList) {
+            ja.put(d.toJson());
+        }
+
+        return ja;
+    }
 }
 

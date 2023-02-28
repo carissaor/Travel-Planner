@@ -1,53 +1,28 @@
 package model;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 // Represent the information researched by users regarding a particular destination
-public class WishList extends ListRelated<LocalPlace> {
+public class WishList extends ListRelated<LocalPlace> implements Writable {
 
-    // EFFECTS: return an array list containing information in the activities category
-    public ArrayList<LocalPlace> getA() {
-        ArrayList<LocalPlace> localPlaceA = new ArrayList<>();
-        for (LocalPlace localPlace : super.getListRelated()) {
-            if (localPlace.getType() == 'A') {
-                localPlaceA.add(localPlace);
-            }
-        }
-        return localPlaceA;
+    @Override
+    public JSONObject toJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("local place", toJsonArray());
+        return jo;
     }
 
-    // EFFECTS: return an array list containing information in the food category
-    public ArrayList<LocalPlace> getF() {
-        ArrayList<LocalPlace> localPlaceF = new ArrayList<>();
-        for (LocalPlace localPlace : super.getListRelated()) {
-            if (localPlace.getType() == 'F') {
-                localPlaceF.add(localPlace);
-            }
+    public JSONArray toJsonArray() {
+        JSONArray ja = new JSONArray();
+        for (LocalPlace wl : super.getListRelated()) {
+            ja.put(wl.toJson());
         }
-        return localPlaceF;
+        return ja;
     }
 
-    // EFFECTS: return an array list containing information in the living space category
-    public ArrayList<LocalPlace> getL() {
-        ArrayList<LocalPlace> localPlaceL = new ArrayList<>();
-        for (LocalPlace localPlace : super.getListRelated()) {
-            if (localPlace.getType() == 'L') {
-                localPlaceL.add(localPlace);
-            }
-        }
-        return localPlaceL;
-    }
 
-    // EFFECTS: return an array list containing information in the others category
-    public ArrayList<LocalPlace> getO() {
-        ArrayList<LocalPlace> localPlaceO = new ArrayList<>();
-        for (LocalPlace localPlace : super.getListRelated()) {
-            if (localPlace.getType() == 'O') {
-                localPlaceO.add(localPlace);
-            }
-        }
-        return localPlaceO;
-    }
 }
 
 

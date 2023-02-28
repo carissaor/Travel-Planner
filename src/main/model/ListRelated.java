@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 // A subclass for WishList and EachDay as the two classes both have an array list and similar behavior
@@ -27,6 +29,7 @@ public class ListRelated<T> {
     public ArrayList<T> getListRelated() {
         return listRelated;
     }
+
 
 }
 

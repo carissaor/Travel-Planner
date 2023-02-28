@@ -16,8 +16,8 @@ public class WishListTest {
     @BeforeEach
     public void runBefore() {
         testWishList = new WishList();
-        testData1 = new LocalPlace("Steam Clock", 0, 'A');
-        testData2 = new LocalPlace("Granville Island", 100, 'F');
+        testData1 = new LocalPlace("Steam Clock", 0, Category.ACTIVITIES);
+        testData2 = new LocalPlace("Granville Island", 100, Category.FOODS);
     }
 
     @Test
@@ -44,20 +44,6 @@ public class WishListTest {
         testWishList.addItem(testData2);
         testWishList.removeItem(testData2);
         assertEquals(1, testWishList.getListRelated().size());
-    }
-
-    @Test
-    public void testGetType() {
-        testData3 = new LocalPlace("Hotel", 300, 'L');
-        testData4 = new LocalPlace("UBC", 100, 'O');
-        testWishList.addItem(testData1);
-        testWishList.addItem(testData2);
-        testWishList.addItem(testData3);
-        testWishList.addItem(testData4);
-        assertEquals(1, testWishList.getA().size());
-        assertEquals("Granville Island", testWishList.getF().get(0).getDescription());
-        assertEquals(1, testWishList.getL().size());
-        assertEquals("UBC", testWishList.getO().get(0).getDescription());
     }
 
 }

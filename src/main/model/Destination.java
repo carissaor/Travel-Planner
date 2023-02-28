@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represent a country/ city user want to visit in the future.
-public class Destination {
+public class Destination implements Writable {
 
     private String placeName;
     private WishList wishList;
@@ -43,6 +47,34 @@ public class Destination {
 
     public Itinerary getItinerary() {
         return itinerary;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("place name", placeName);
+        jo.put("budget", getBudget());
+        jo.put("duration", getDuration());
+        jo.put("wishlist", toJsonArrayWishList());
+        jo.put("itinerary", toJsonArrayItinerary());
+        return jo;
+    }
+
+    private JSONArray toJsonArrayItinerary() {
+        JSONArray ja = new JSONArray();
+        for (EachDay ed : itinerary.getItineraryList()) {
+            ja.put(ed.toJson());
+        }
+        return ja;
+    }
+
+    public JSONArray toJsonArrayWishList() {
+
+        JSONArray ja = new JSONArray();
+        for (LocalPlace wl : wishList.getListRelated()) {
+            ja.put(wl.toJson());
+        }
+        return ja;
     }
 }
 

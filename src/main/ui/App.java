@@ -1,20 +1,32 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Represent a travel planner application
 public class App {
 
-    private ArrayList<Destination> destinationList;
+    private static final String JSON_STORE = "./data/app.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private DestinationList destinationList;
     private Destination destination;
     private LocalPlace localPlace;
     private Scanner userInput;
 
     // EFFECTS: run the application
-    public App() {
+    public App() throws FileNotFoundException {
+
+        userInput = new Scanner(System.in);
+        destinationList = new DestinationList("user's");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runApp();
     }
 
@@ -24,8 +36,7 @@ public class App {
         boolean keepGoing = true;
         String command;
 
-        init();
-
+//        init();
         while (keepGoing) {
             mainMenu();
             command = userInput.next();
@@ -43,23 +54,25 @@ public class App {
 
     // MODIFIES: this
     // EFFECTS: initialize a list of destination to empty
-    private void init() {
-        destinationList = new ArrayList<>();
-        userInput = new Scanner(System.in);
-        userInput.useDelimiter("\n");
-    }
+//    private void init() {
+//        destinationList = new ArrayList<>();
+//        userInput = new Scanner(System.in);
+//        userInput.useDelimiter("\n");
+//    }
 
     // EFFECTS: prints main menu
     private void mainMenu() {
-        if (destinationList.size() == 0) {
-            System.out.println("A -> add new destination");
-            System.out.println("Q -> quit");
-        } else {
+//        if (destinationList.getListRelated().size() == 0) {
+//            System.out.println("A -> add new destination");
+//            System.out.println("Q -> quit");
+//        } else {
             System.out.println("A -> add new destination");
             System.out.println("D -> delete an existing destination");
             System.out.println("V -> view existing destination(s)");
+            System.out.println("L -> load saved data");
+            System.out.println("S -> save");
             System.out.println("Q -> quit");
-        }
+//        }
     }
 
     // MODIFIES: this
@@ -71,6 +84,10 @@ public class App {
             deleteDest();
         } else if (command.equals("V")) {
             viewDestList();
+        } else if (command.equals("L")) {
+            loadApp();
+        } else if (command.equals("S")) {
+            saveApp();
         } else {
             System.out.println("Invalid input");
         }
@@ -125,7 +142,7 @@ public class App {
         duration = userInput.nextInt();
 
         destination = new Destination(placeName, budget, duration);
-        destinationList.add(destination);
+        destinationList.getListRelated().add(destination);
         addWishList();
     }
 
@@ -133,14 +150,16 @@ public class App {
     // EFFECTS: remove a destination to destination list
     private void deleteDest() {
         String removePlace;
-        for (Destination destination : destinationList) {
+        ArrayList<Destination> dl = destinationList.getListRelated();
+
+        for (Destination destination : dl) {
             System.out.println(destination.getPlaceName());
         }
         System.out.println("Which destination have you visited? ");
         removePlace = userInput.next().toLowerCase();
-        for (Destination destination : destinationList) {
+        for (Destination destination : dl) {
             if (removePlace.equals(destination.getPlaceName().toLowerCase())) {
-                destinationList.remove(destination);
+                dl.remove(destination);
                 break;
             } else {
                 System.out.println("Invalid input");
@@ -151,8 +170,10 @@ public class App {
     // EFFECTS: prints the destination list
     private void viewDestList() {
 
-        for (int i = 0; i < destinationList.size(); i++) {
-            Destination destination = destinationList.get(i);
+        ArrayList<Destination> dl = destinationList.getListRelated();
+
+        for (int i = 0; i < dl.size(); i++) {
+            Destination destination = dl.get(i);
             System.out.println(i + 1 + ".");
             System.out.println("Place: " + destination.getPlaceName());
             System.out.println("Budget: " + destination.getBudget());
@@ -166,16 +187,18 @@ public class App {
     private void afterViewDestMenu() {
         String command;
         String destName;
+        ArrayList<Destination> dl = destinationList.getListRelated();
+
         System.out.println("E -> edit destination info");
         System.out.println("Q -> quit");
         command = userInput.next().toUpperCase();
         if (command.equals("E")) {
-            if (destinationList.size() == 1) {
+            if (dl.size() == 1) {
                 editDest();
             } else {
                 System.out.println("Which destination?");
                 destName = userInput.next().toLowerCase();
-                for (Destination destination : destinationList) {
+                for (Destination destination : dl) {
                     if (destName.equals(destination.getPlaceName().toLowerCase())) {
                         this.destination = destination;
                         editDest();
@@ -218,7 +241,6 @@ public class App {
     private void addWishList() {
         String localPlace;
         int cost;
-        char type;
 
         System.out.println("Where do you want to visit in " + destination.getPlaceName() + "?");
         localPlace = userInput.next();
@@ -226,18 +248,32 @@ public class App {
         System.out.println("What is the estimated cost?");
         cost = userInput.nextInt();
 
-        System.out.println("Which category?");
-        System.out.println("A -> activity");
-        System.out.println("F -> food");
-        System.out.println("L -> living space");
-        System.out.println("O -> others");
-        String typeTemp = userInput.next().toUpperCase();
-        type = typeTemp.charAt(0);
+        Category category = readCategory();
+//        System.out.println("Which category?");
+//        System.out.println("A -> activity");
+//        System.out.println("F -> food");
+//        System.out.println("L -> living space");
+//        System.out.println("O -> others");
+//        String typeTemp = userInput.next().toUpperCase();
+//        type = typeTemp.charAt(0);
 
-        this.localPlace = new LocalPlace(localPlace, cost, type);
+        this.localPlace = new LocalPlace(localPlace, cost, category);
         destination.getWishList().addItem(this.localPlace);
 
         afterAddWL();
+    }
+
+    private Category readCategory() {
+        System.out.println("Please select a category for your thingy");
+
+        int menuLabel = 1;
+        for (Category c : Category.values()) {
+            System.out.println(menuLabel + ": " + c);
+            menuLabel++;
+        }
+
+        int menuSelection = userInput.nextInt();
+        return Category.values()[menuSelection - 1];
     }
 
     // MODIFIES: this
@@ -252,31 +288,40 @@ public class App {
         processCommandWL(command);
     }
 
-    // EFFECTS: display wishlist according to category and call function to display menu afterwards
     private void viewWishList() {
-        WishList wishList = destination.getWishList();
+        ArrayList<LocalPlace> wishList = destination.getWishList().getListRelated();
 
-        System.out.println("ACTIVITIES");
-        for (LocalPlace details : wishList.getA()) {
-            System.out.println(details.getDescription());
+        for (LocalPlace localPlace : wishList) {
+            System.out.println(localPlace.getDescription());
         }
-        System.out.println("");
-        System.out.println("FOOD");
-        for (LocalPlace details : wishList.getF()) {
-            System.out.println(details.getDescription());
-        }
-        System.out.println("");
-        System.out.println("LIVING SPACE");
-        for (LocalPlace details : wishList.getL()) {
-            System.out.println(details.getDescription());
-        }
-        System.out.println("");
-        System.out.println("OTHERS");
-        for (LocalPlace details : wishList.getO()) {
-            System.out.println(details.getDescription());
-        }
-        afterViewWL();
+
     }
+
+    // EFFECTS: display wishlist according to category and call function to display menu afterwards
+//    private void viewWishList() {
+//        WishList wishList = destination.getWishList();
+//
+//        System.out.println("ACTIVITIES");
+//        for (LocalPlace details : wishList.getA()) {
+//            System.out.println(details.getDescription());
+//        }
+//        System.out.println("");
+//        System.out.println("FOOD");
+//        for (LocalPlace details : wishList.getF()) {
+//            System.out.println(details.getDescription());
+//        }
+//        System.out.println("");
+//        System.out.println("LIVING SPACE");
+//        for (LocalPlace details : wishList.getL()) {
+//            System.out.println(details.getDescription());
+//        }
+//        System.out.println("");
+//        System.out.println("OTHERS");
+//        for (LocalPlace details : wishList.getO()) {
+//            System.out.println(details.getDescription());
+//        }
+//        afterViewWL();
+//    }
 
     // MODIFIES: this
     // EFFECTS: processes user input
@@ -292,30 +337,30 @@ public class App {
     }
 
     // EFFECTS: display current wish list according to category
-    private void displayWishList() {
-
-        WishList wishList = destination.getWishList();
-
-        System.out.println("ACTIVITIES");
-        for (LocalPlace details : wishList.getA()) {
-            System.out.println(details.getDescription());
-        }
-        System.out.println("");
-        System.out.println("FOOD");
-        for (LocalPlace details : wishList.getF()) {
-            System.out.println(details.getDescription());
-        }
-        System.out.println("");
-        System.out.println("LIVING SPACE");
-        for (LocalPlace details : wishList.getL()) {
-            System.out.println(details.getDescription());
-        }
-        System.out.println("");
-        System.out.println("OTHERS");
-        for (LocalPlace details : wishList.getO()) {
-            System.out.println(details.getDescription());
-        }
-    }
+//    private void displayWishList() {
+//
+//        WishList wishList = destination.getWishList();
+//
+//        System.out.println("ACTIVITIES");
+//        for (LocalPlace details : wishList.getA()) {
+//            System.out.println(details.getDescription());
+//        }
+//        System.out.println("");
+//        System.out.println("FOOD");
+//        for (LocalPlace details : wishList.getF()) {
+//            System.out.println(details.getDescription());
+//        }
+//        System.out.println("");
+//        System.out.println("LIVING SPACE");
+//        for (LocalPlace details : wishList.getL()) {
+//            System.out.println(details.getDescription());
+//        }
+//        System.out.println("");
+//        System.out.println("OTHERS");
+//        for (LocalPlace details : wishList.getO()) {
+//            System.out.println(details.getDescription());
+//        }
+//    }
 
     // MODIFIES: this
     // EFFECTS: processes user input
@@ -326,7 +371,7 @@ public class App {
         System.out.println("V -> view itinerary");
         String input = userInput.next().toUpperCase();
         if (input.equals("A")) {
-            displayWishList();
+            viewWishList();
             System.out.println("Which place would you like to add to itinerary?");
             chooseInfo = userInput.next().toLowerCase();
             editingItinerary(chooseInfo, true);
@@ -407,6 +452,29 @@ public class App {
             for (LocalPlace localPlace : eachDay.getListRelated()) {
                 System.out.println(localPlace.getDescription());
             }
+        }
+    }
+
+    // EFFECTS: save the destination list to file
+    private void saveApp() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(destinationList);
+            jsonWriter.close();
+            System.out.println("Saved " + destinationList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+//     MODIFIES: this
+//     EFFECTS: loads workroom from file
+    private void loadApp() {
+        try {
+            destinationList = jsonReader.read();
+            System.out.println("Loaded " + destinationList.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

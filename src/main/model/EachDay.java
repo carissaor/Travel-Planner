@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents each day in the itinerary
-public class EachDay extends ListRelated<LocalPlace> {
+public class EachDay extends ListRelated<LocalPlace> implements Writable {
 
     private String text;
 
@@ -15,4 +19,21 @@ public class EachDay extends ListRelated<LocalPlace> {
         return text;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("description", text);
+        jo.put("each day", toJsonArray());
+        return jo;
+    }
+
+    private JSONArray toJsonArray() {
+        JSONArray ja = new JSONArray();
+
+        for (LocalPlace p : super.getListRelated()) {
+            ja.put(p.toJson());
+        }
+
+        return ja;
+    }
 }

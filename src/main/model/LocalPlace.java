@@ -1,19 +1,22 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represent a place/ activity in destination
-public class LocalPlace {
+public class LocalPlace implements Writable {
 
     private String description;
     private int cost;
-    private char type;
+    private Category category;
     private boolean isChosen;
 
     // EFFECTS: creates an Info object with place name, cost, category
     // and by default it is not added to itinerary.
-    public LocalPlace(String description, int cost, char type) {
+    public LocalPlace(String description, int cost, Category category) {
         this.description = description;
         this.cost = cost;
-        this.type = type;
+        this.category = category;
         this.isChosen = false;
     }
 
@@ -38,12 +41,23 @@ public class LocalPlace {
         return cost;
     }
 
-    public char getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
     public boolean getIsChosen() {
         return isChosen;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("description", description);
+        jo.put("cost", cost);
+        jo.put("category", category);
+        jo.put("is chosen", isChosen);
+        return jo;
+    }
+
 }
 
