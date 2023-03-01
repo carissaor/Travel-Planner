@@ -11,14 +11,14 @@ public class LocalPlaceTest {
 
     @BeforeEach
     public void runBefore() {
-        testLocalPlace = new LocalPlace("ubc", 100, 'A');
+        testLocalPlace = new LocalPlace("ubc", 100, Category.ACTIVITIES);
     }
 
     @Test
     void testConstructor() {
         assertEquals("ubc", testLocalPlace.getDescription());
         assertEquals(100, testLocalPlace.getCost());
-        assertEquals('A', testLocalPlace.getType());
+        assertEquals(Category.ACTIVITIES, testLocalPlace.getCategory());
         assertFalse(testLocalPlace.getIsChosen());
     }
 

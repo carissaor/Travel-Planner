@@ -1,49 +1,54 @@
-{
-    "name": "user's",
-    "destination list": [{
-        "duration": 4,
-        "wishlist": [
-            {
-                "cost": 10,
-                "is chosen": false,
-                "description": "ubc",
-                "category": "ACTIVITIES"
-            },
-            {
-                "cost": 40,
+{"destination list": [{
+    "duration": 4,
+    "wishlist": [
+        {
+            "cost": 10,
+            "is chosen": false,
+            "description": "ubc",
+            "category": "ACTIVITIES"
+        },
+        {
+            "cost": 10,
+            "is chosen": false,
+            "description": "art",
+            "category": "ACTIVITIES"
+        },
+        {
+            "cost": 20,
+            "is chosen": false,
+            "description": "food",
+            "category": "FOODS"
+        },
+        {
+            "cost": 70,
+            "is chosen": true,
+            "description": "act",
+            "category": "ACTIVITIES"
+        }
+    ],
+    "itinerary": [
+        {
+            "each day": [],
+            "description": "Day 1"
+        },
+        {
+            "each day": [{
+                "cost": 70,
                 "is chosen": true,
-                "description": "food",
-                "category": "FOODS"
-            }
-        ],
-        "itinerary": [
-            {
-                "each day": [{
-                    "cost": 40,
-                    "is chosen": true,
-                    "description": "food",
-                    "category": "FOODS"
-                }],
-                "description": "Day 1",
-                "day num": 1
-            },
-            {
-                "each day": [],
-                "description": "Day 2",
-                "day num": 2
-            },
-            {
-                "each day": [],
-                "description": "Day 3",
-                "day num": 3
-            },
-            {
-                "each day": [],
-                "description": "Day 4",
-                "day num": 4
-            }
-        ],
-        "place name": "vancouver",
-        "budget": 960
-    }]
-}
+                "description": "act",
+                "category": "ACTIVITIES"
+            }],
+            "description": "Day 2"
+        },
+        {
+            "each day": [],
+            "description": "Day 3"
+        },
+        {
+            "each day": [],
+            "description": "Day 4"
+        }
+    ],
+    "place name": "vancouver",
+    "budget": 930
+}]}

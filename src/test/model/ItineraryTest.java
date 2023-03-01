@@ -14,8 +14,8 @@ public class ItineraryTest {
     @BeforeEach
     public void runBefore() {
         testItinerary = new Itinerary(1000, 5);
-        testData1 = new LocalPlace("description", 50, 'F');
-        testData2 = new LocalPlace("description", 2000, 'A');
+        testData1 = new LocalPlace("description", 50, Category.FOODS);
+        testData2 = new LocalPlace("description", 2000, Category.ACTIVITIES);
     }
 
     @Test

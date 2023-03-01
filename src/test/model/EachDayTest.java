@@ -13,7 +13,7 @@ public class EachDayTest {
     @BeforeEach
     public void runBefore() {
         testDay = new EachDay("Day 1");
-        localPlace1 = new LocalPlace("test1", 100, 'A');
+        localPlace1 = new LocalPlace("test1", 100, Category.FOODS);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class EachDayTest {
 
     @Test
     void testAddRemove() {
-        localPlace2 = new LocalPlace("test2", 500, 'O');
+        localPlace2 = new LocalPlace("test2", 500, Category.ACTIVITIES);
         testDay.addItem(localPlace2);
         testDay.addItem(localPlace1);
         assertEquals(2, testDay.getListRelated().size());
