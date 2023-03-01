@@ -8,22 +8,10 @@ import java.util.ArrayList;
 
 public class DestinationList extends ListRelated<Destination> implements Writable {
 
-//    private String name;
-
-    public DestinationList() {
-        super();
-//        this.name = name;
-    }
-
-
-//    public String getName() {
-//        return name;
-//    }
 
     @Override
     public JSONObject toJson() {
         JSONObject jo = new JSONObject();
-//        jo.put("name", name);
         jo.put("destination list", toJsonArray());
         return jo;
     }

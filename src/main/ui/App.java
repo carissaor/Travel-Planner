@@ -12,7 +12,7 @@ import java.util.Scanner;
 // Represent a travel planner application
 public class App {
 
-    private static final String JSON_STORE = "./data/testReaderGeneralDestinationList.json";
+    private static final String JSON_STORE = "./data/app.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private DestinationList destinationList;
@@ -280,38 +280,27 @@ public class App {
 
     private void viewWishList(Destination destination) {
         ArrayList<LocalPlace> wishList = destination.getWishList().getListRelated();
-
         System.out.println("ACTIVITIES");
-        for (LocalPlace localPlace : wishList) {
-            if (localPlace.getCategory() == Category.ACTIVITIES) {
-                System.out.println(localPlace.getDescription());
-            }
-        }
-
+        printWL(wishList, Category.ACTIVITIES);
         System.out.println("FOODS");
-        for (LocalPlace localPlace : wishList) {
-            if (localPlace.getCategory() == Category.FOODS) {
-                System.out.println(localPlace.getDescription());
-            }
-        }
-
+        printWL(wishList, Category.FOODS);
         System.out.println("ACCOMMODATION");
-        for (LocalPlace localPlace : wishList) {
-            if (localPlace.getCategory() == Category.ACCOMMODATIONS) {
-                System.out.println(localPlace.getDescription());
-            }
-        }
-
+        printWL(wishList, Category.ACCOMMODATIONS);
         System.out.println("OTHERS");
-        for (LocalPlace localPlace : wishList) {
-            if (localPlace.getCategory() == Category.OTHERS) {
-                System.out.println(localPlace.getDescription());
-            }
-        }
+        printWL(wishList, Category.OTHERS);
 
         afterViewWL(destination);
 
     }
+
+    private void printWL(ArrayList<LocalPlace> wishList, Category category) {
+        for (LocalPlace localPlace : wishList) {
+            if (localPlace.getCategory() == category) {
+                System.out.println(localPlace.getDescription());
+            }
+        }
+    }
+
 
     // MODIFIES: this
     // EFFECTS: processes user input
@@ -431,7 +420,7 @@ public class App {
         }
     }
 
-//     MODIFIES: this
+    //     MODIFIES: this
 //     EFFECTS: loads workroom from file
     private void loadApp() {
         try {
