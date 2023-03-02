@@ -5,6 +5,9 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class DestinationList extends ListRelated<Destination> implements Writable {
 

@@ -1,12 +1,7 @@
 {"destination list": [
     {
         "duration": 1,
-        "wishlist": [{
-            "cost": 1,
-            "is chosen": false,
-            "description": "1",
-            "category": "ACTIVITIES"
-        }],
+        "wishlist": [],
         "itinerary": [{
             "each day": [],
             "description": "Day 1"
@@ -16,12 +11,7 @@
     },
     {
         "duration": 2,
-        "wishlist": [{
-            "cost": 2,
-            "is chosen": false,
-            "description": "2",
-            "category": "FOODS"
-        }],
+        "wishlist": [],
         "itinerary": [
             {
                 "each day": [],

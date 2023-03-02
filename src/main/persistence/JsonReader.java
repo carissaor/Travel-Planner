@@ -40,7 +40,6 @@ public class JsonReader {
 
     // EFFECTS: parses DestinationList from JSON object and returns it
     private DestinationList parseDestinationList(JSONObject jsonObject) {
-//        String name = jsonObject.getString("name");
         DestinationList destinationList = new DestinationList();
         addDestinations(destinationList, jsonObject);
         return destinationList;

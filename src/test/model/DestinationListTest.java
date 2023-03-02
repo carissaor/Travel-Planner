@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,14 @@ public class DestinationListTest {
     @Test
     public void testConstructor() {
         assertEquals(0, destinationList.getListRelated().size());
+    }
+
+    @Test
+    public void testToJson() {
+        destinationList.addItem(destination1);
+        destinationList.addItem(destination2);
+        JSONObject testData = destinationList.toJson();
+        assertEquals("2", testData.getJSONArray("destination list").length());
     }
 
 }
