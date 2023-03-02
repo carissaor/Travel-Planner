@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,9 +10,6 @@ public class WishListTest {
     WishList testWishList;
     LocalPlace testData1;
     LocalPlace testData2;
-    LocalPlace testData3;
-    LocalPlace testData4;
-
 
     @BeforeEach
     public void runBefore() {
@@ -44,6 +42,14 @@ public class WishListTest {
         testWishList.addItem(testData2);
         testWishList.removeItem(testData2);
         assertEquals(1, testWishList.getListRelated().size());
+    }
+
+    @Test
+    public void testToJson() {
+        testWishList.addItem(testData1);
+        testWishList.addItem(testData2);
+        JSONObject testData = testWishList.toJson();
+        assertEquals(2, testData.getJSONArray("wishlist").length());
     }
 
 }

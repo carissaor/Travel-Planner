@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +29,15 @@ public class LocalPlaceTest {
         assertTrue(testLocalPlace.getIsChosen());
         testLocalPlace.removeThis();
         assertFalse(testLocalPlace.getIsChosen());
+    }
+
+    @Test
+    void testToJson() {
+        JSONObject testData = testLocalPlace.toJson();
+        assertEquals("ubc", testData.getString("description"));
+        assertEquals(100, testData.getInt("cost"));
+        assertEquals(Category.ACTIVITIES, testData.get("category"));
+        assertFalse(testData.getBoolean("is chosen"));
     }
 
 }

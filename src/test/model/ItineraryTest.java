@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,5 +82,15 @@ public class ItineraryTest {
         assertEquals(5, testItinerary.getDuration());
         assertEquals(5, testItinerary.getItineraryList().size());
         assertEquals("Day 5", testItinerary.getItineraryList().get(4).getText());
+    }
+
+    @Test
+    void testToJson() {
+        testItinerary.editItinerary(1, testData1);
+        testItinerary.editItinerary(2, testData2);
+        JSONObject testData = testItinerary.toJson();
+        assertEquals(testItinerary.getItineraryList().size(), testData.getJSONArray("itinerary").length());
+        assertEquals(testItinerary.getBudgetLeft(), testData.getInt("budget"));
+        assertEquals(testItinerary.getDuration(), testData.getInt("duration"));
     }
 }

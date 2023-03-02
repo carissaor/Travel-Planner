@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,5 +38,15 @@ class DestinationTest {
     @Test
     void testGetDuration() {
         assertEquals(10, testDest.getDuration());
+    }
+
+    @Test
+    void testToJson() {
+        JSONObject testData = testDest.toJson();
+        assertEquals(testDest.getPlaceName(), testData.getString("place name"));
+        assertEquals(testDest.getBudget(), testData.getInt("budget"));
+        assertEquals(testDest.getDuration(), testData.getInt("duration"));
+        assertEquals(testDest.getWishList().getListRelated().size(), testData.getJSONArray("wishlist").length());
+        assertEquals(testDest.getItineraryList().size(), testData.getJSONArray("itinerary").length());
     }
 }
