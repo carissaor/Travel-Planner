@@ -1,28 +1,15 @@
 {"destination list": [
     {
-        "duration": 3,
-        "wishlist": [
-            {
-                "cost": 1,
-                "is chosen": false,
-                "description": "ubc",
-                "category": "ACTIVITIES"
-            },
-            {
-                "cost": 20,
-                "is chosen": true,
-                "description": "granville",
-                "category": "OTHERS"
-            }
-        ],
+        "duration": 4,
+        "wishlist": [{
+            "cost": 10,
+            "is chosen": true,
+            "description": "ubc",
+            "category": "ACTIVITIES"
+        }],
         "itinerary": [
             {
-                "each day": [{
-                    "cost": 20,
-                    "is chosen": true,
-                    "description": "granville",
-                    "category": "OTHERS"
-                }],
+                "each day": [],
                 "description": "Day 1"
             },
             {
@@ -30,49 +17,48 @@
                 "description": "Day 2"
             },
             {
-                "each day": [],
+                "each day": [{
+                    "cost": 10,
+                    "is chosen": true,
+                    "description": "ubc",
+                    "category": "ACTIVITIES"
+                }],
                 "description": "Day 3"
+            },
+            {
+                "each day": [],
+                "description": "Day 4"
             }
         ],
         "place name": "vancouver",
-        "budget": 979
+        "budget": 990
     },
     {
-        "duration": 3,
+        "duration": 1,
         "wishlist": [
             {
                 "cost": 30,
                 "is chosen": false,
-                "description": "tj",
-                "category": "FOODS"
+                "description": "ferry",
+                "category": "ACCOMMODATIONS"
             },
             {
-                "cost": 100,
+                "cost": 20,
                 "is chosen": true,
-                "description": "tst",
-                "category": "OTHERS"
+                "description": "food",
+                "category": "FOODS"
             }
         ],
-        "itinerary": [
-            {
-                "each day": [],
-                "description": "Day 1"
-            },
-            {
-                "each day": [],
-                "description": "Day 2"
-            },
-            {
-                "each day": [{
-                    "cost": 100,
-                    "is chosen": true,
-                    "description": "tst",
-                    "category": "OTHERS"
-                }],
-                "description": "Day 3"
-            }
-        ],
-        "place name": "hk",
-        "budget": 670
+        "itinerary": [{
+            "each day": [{
+                "cost": 20,
+                "is chosen": true,
+                "description": "food",
+                "category": "FOODS"
+            }],
+            "description": "Day 1"
+        }],
+        "place name": "victoria",
+        "budget": 280
     }
 ]}

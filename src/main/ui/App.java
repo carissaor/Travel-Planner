@@ -252,6 +252,7 @@ public class App {
         afterAddWL(destination);
     }
 
+    // adopted from JsonSerializationDemo
     // MODIFIES: LocalPlace
     // EFFECTS: prompt user input and assign Category to place
     private Category readCategory() {
@@ -279,6 +280,7 @@ public class App {
         processCommandWL(destination, command);
     }
 
+    // EFFECTS: prints the current wishlist
     private void viewWishList(Destination destination) {
         ArrayList<LocalPlace> wishList = destination.getWishList().getListRelated();
         System.out.println("ACTIVITIES");
@@ -294,6 +296,7 @@ public class App {
 
     }
 
+    // EFFECTS: helper function for viewWishList method to help categorize wishlist
     private void printWL(ArrayList<LocalPlace> wishList, Category category) {
         for (LocalPlace localPlace : wishList) {
             if (localPlace.getCategory() == category) {
@@ -421,8 +424,9 @@ public class App {
         }
     }
 
-//    MODIFIES: this
-//    EFFECTS: loads workroom from file
+
+    // MODIFIES: this
+    // EFFECTS: load the app from file
     private void loadApp() {
         try {
             destinationList = jsonReader.read();

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Represent tests for LocalPlace class
 public class LocalPlaceTest {
 
     LocalPlace testLocalPlace;

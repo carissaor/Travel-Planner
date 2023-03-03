@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Represent tests for Destination class
 class DestinationTest {
 
     Destination testDest;

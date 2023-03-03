@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Represent tests for DestinationList class
 public class DestinationListTest {
 
     DestinationList destinationList;
