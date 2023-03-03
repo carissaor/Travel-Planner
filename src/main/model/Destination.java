@@ -42,12 +42,16 @@ public class Destination implements Writable {
         return placeName;
     }
 
-    public WishList getWishList() {
-        return wishList;
-    }
-
     public void setWishList(WishList wishList) {
         this.wishList = wishList;
+    }
+
+    public void setItinerary(Itinerary itinerary) {
+        this.itinerary = itinerary;
+    }
+
+    public WishList getWishList() {
+        return wishList;
     }
 
     public Itinerary getItinerary() {
@@ -72,18 +76,6 @@ public class Destination implements Writable {
         }
         return ja;
     }
-
-//    private JSONArray toJsonArrayItinerary() {
-//        JSONArray ja = new JSONArray();
-//        for (EachDay ed : itinerary.getItineraryList()) {
-//            JSONArray localPlaceJsonArray =  new JSONArray();
-//            for (LocalPlace lp : ed.getListRelated()) {
-//                localPlaceJsonArray.put(lp.toJson());
-//            }
-//            ja.put(ed.toJson());
-//        }
-//        return ja;
-//    }
 
     public JSONArray toJsonArrayWishList() {
 

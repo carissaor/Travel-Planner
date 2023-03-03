@@ -1,42 +1,28 @@
 {"destination list": [
     {
-        "duration": 5,
+        "duration": 3,
         "wishlist": [
             {
                 "cost": 1,
-                "is chosen": true,
+                "is chosen": false,
                 "description": "ubc",
                 "category": "ACTIVITIES"
             },
             {
-                "cost": 2,
+                "cost": 20,
                 "is chosen": true,
                 "description": "granville",
-                "category": "FOODS"
-            },
-            {
-                "cost": 10,
-                "is chosen": true,
-                "description": "art",
-                "category": "ACTIVITIES"
+                "category": "OTHERS"
             }
         ],
         "itinerary": [
             {
-                "each day": [
-                    {
-                        "cost": 1,
-                        "is chosen": true,
-                        "description": "ubc",
-                        "category": "ACTIVITIES"
-                    },
-                    {
-                        "cost": 2,
-                        "is chosen": true,
-                        "description": "granville",
-                        "category": "FOODS"
-                    }
-                ],
+                "each day": [{
+                    "cost": 20,
+                    "is chosen": true,
+                    "description": "granville",
+                    "category": "OTHERS"
+                }],
                 "description": "Day 1"
             },
             {
@@ -46,48 +32,30 @@
             {
                 "each day": [],
                 "description": "Day 3"
-            },
-            {
-                "each day": [],
-                "description": "Day 4"
-            },
-            {
-                "each day": [{
-                    "cost": 10,
-                    "is chosen": true,
-                    "description": "art",
-                    "category": "ACTIVITIES"
-                }],
-                "description": "Day 5"
             }
         ],
         "place name": "vancouver",
-        "budget": 1077
+        "budget": 979
     },
     {
-        "duration": 7,
+        "duration": 3,
         "wishlist": [
             {
-                "cost": 10,
-                "is chosen": true,
+                "cost": 30,
+                "is chosen": false,
                 "description": "tj",
                 "category": "FOODS"
             },
             {
                 "cost": 100,
                 "is chosen": true,
-                "description": "hotel",
-                "category": "ACCOMMODATIONS"
+                "description": "tst",
+                "category": "OTHERS"
             }
         ],
         "itinerary": [
             {
-                "each day": [{
-                    "cost": 100,
-                    "is chosen": true,
-                    "description": "hotel",
-                    "category": "ACCOMMODATIONS"
-                }],
+                "each day": [],
                 "description": "Day 1"
             },
             {
@@ -95,32 +63,16 @@
                 "description": "Day 2"
             },
             {
-                "each day": [],
-                "description": "Day 3"
-            },
-            {
-                "each day": [],
-                "description": "Day 4"
-            },
-            {
                 "each day": [{
-                    "cost": 10,
+                    "cost": 100,
                     "is chosen": true,
-                    "description": "tj",
-                    "category": "FOODS"
+                    "description": "tst",
+                    "category": "OTHERS"
                 }],
-                "description": "Day 5"
-            },
-            {
-                "each day": [],
-                "description": "Day 6"
-            },
-            {
-                "each day": [],
-                "description": "Day 7"
+                "description": "Day 3"
             }
         ],
         "place name": "hk",
-        "budget": 890
+        "budget": 670
     }
 ]}

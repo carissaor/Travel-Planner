@@ -12,7 +12,7 @@ import java.util.Scanner;
 // Represent a travel planner application
 public class App {
 
-    private static final String JSON_STORE = "../data/app.json";
+    private static final String JSON_STORE = "./data/app.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private DestinationList destinationList;
@@ -90,6 +90,7 @@ public class App {
     // MODIFIES: this
     // EFFECTS: processes user input in destination level
     private void processCommandDest(Destination destination, String command) {
+
         if (command.equals("B")) {
             editDestInfo(true);
         } else if (command.equals("D")) {
