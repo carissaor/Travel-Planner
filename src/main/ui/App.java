@@ -12,7 +12,7 @@ import java.util.Scanner;
 // Represent a travel planner application
 public class App {
 
-    private static final String JSON_STORE = "./data/app.json";
+    private static final String JSON_STORE = "../data/app.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private DestinationList destinationList;
@@ -52,7 +52,7 @@ public class App {
     }
 
 
-    // EFFECTS: prints main menu
+    // EFFECTS: display main menu
     private void mainMenu() {
         if (destinationList.getListRelated().size() == 0) {
             System.out.println("A -> add new destination");
@@ -107,7 +107,7 @@ public class App {
     // EFFECTS: processes user input in wishlist level
     private void processCommandWL(Destination destination, String command) {
         if (command.equals("A")) {
-            addToItinerary(localPlace);
+            addToItinerary(this.localPlace);
         } else if (command.equals("M")) {
             addWishList(destination);
         } else if (command.equals("V")) {
@@ -252,7 +252,7 @@ public class App {
     }
 
     // MODIFIES: LocalPlace
-    // EFFECTS: assign Category to place
+    // EFFECTS: prompt user input and assign Category to place
     private Category readCategory() {
         System.out.println("Please select a category");
 
@@ -420,8 +420,8 @@ public class App {
         }
     }
 
-    //     MODIFIES: this
-//     EFFECTS: loads workroom from file
+//    MODIFIES: this
+//    EFFECTS: loads workroom from file
     private void loadApp() {
         try {
             destinationList = jsonReader.read();

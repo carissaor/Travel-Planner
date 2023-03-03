@@ -45,8 +45,8 @@ public class JsonReader {
         return destinationList;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: dl
+    // EFFECTS: parses destinations from JSON object and adds them to destination list
     private void addDestinations(DestinationList dl, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("destination list");
         for (Object json : jsonArray) {
@@ -55,8 +55,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: dl
+    // EFFECTS: parses destination from JSON object and adds it to destination list
     private void addDestination(DestinationList dl, JSONObject jsonObject) {
         String name = jsonObject.getString("place name");
         Integer budget = jsonObject.getInt("budget");
@@ -67,6 +67,7 @@ public class JsonReader {
         dl.addItem(destination);
     }
 
+    // EFFECTS: parses itinerary from JSON object and adds them to destination list
     private void addItineraries(Destination destination, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("itinerary");
         for (Object json : jsonArray) {
@@ -75,8 +76,10 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: parses itinerary from JSON object and adds it to destination list
     private void addItinerary(Destination destination, JSONObject jsonObject) {
         Itinerary itinerary = destination.getItinerary();
+        addEachDays(itinerary, jsonObject);
         addEachDays(itinerary, jsonObject);
     }
 
@@ -90,9 +93,9 @@ public class JsonReader {
 
     private void addEachDay(Itinerary itinerary, JSONObject jsonObject) {
         String text = jsonObject.getString("description");
-//        Integer dayNum = jsonObject.getInt("day num");
         EachDay eachDay = new EachDay(text);
         addLocalPlaceItinerary(eachDay, jsonObject);
+        itinerary.getItineraryList().add(eachDay);
     }
 
     private void addLocalPlaceItinerary(EachDay eachDay, JSONObject jsonObject) {
@@ -103,17 +106,15 @@ public class JsonReader {
         eachDay.addItem(localPlace);
     }
 
+
     private void addWishLists(Destination destination, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("wishlist");
+        WishList wishList = new WishList();
         for (Object json : jsonArray) {
             JSONObject nextWishList = (JSONObject) json;
-            addWishList(destination, nextWishList);
+            addLocalPlace(wishList, nextWishList);
         }
-    }
-
-    private void addWishList(Destination destination, JSONObject jsonObject) {
-        WishList wishList = destination.getWishList();
-        addLocalPlace(wishList, jsonObject);
+        destination.setWishList(wishList);
     }
 
     private void addLocalPlace(WishList wl, JSONObject jsonObject) {

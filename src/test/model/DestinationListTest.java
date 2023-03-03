@@ -29,7 +29,7 @@ public class DestinationListTest {
         destinationList.addItem(destination1);
         destinationList.addItem(destination2);
         JSONObject testData = destinationList.toJson();
-        assertEquals("2", testData.getJSONArray("destination list").length());
+        assertEquals(2, testData.getJSONArray("destination list").length());
     }
 
 }

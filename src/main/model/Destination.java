@@ -27,6 +27,7 @@ public class Destination implements Writable {
         return itinerary.getItineraryList();
     }
 
+
     // EFFECTS: get the amount of current budget in itinerary.
     public int getBudget() {
         return itinerary.getBudgetLeft();
@@ -45,6 +46,9 @@ public class Destination implements Writable {
         return wishList;
     }
 
+    public void setWishList(WishList wishList) {
+        this.wishList = wishList;
+    }
 
     public Itinerary getItinerary() {
         return itinerary;
@@ -69,11 +73,23 @@ public class Destination implements Writable {
         return ja;
     }
 
+//    private JSONArray toJsonArrayItinerary() {
+//        JSONArray ja = new JSONArray();
+//        for (EachDay ed : itinerary.getItineraryList()) {
+//            JSONArray localPlaceJsonArray =  new JSONArray();
+//            for (LocalPlace lp : ed.getListRelated()) {
+//                localPlaceJsonArray.put(lp.toJson());
+//            }
+//            ja.put(ed.toJson());
+//        }
+//        return ja;
+//    }
+
     public JSONArray toJsonArrayWishList() {
 
         JSONArray ja = new JSONArray();
-        for (LocalPlace wl : wishList.getListRelated()) {
-            ja.put(wl.toJson());
+        for (LocalPlace localPlace : wishList.getListRelated()) {
+            ja.put(localPlace.toJson());
         }
         return ja;
     }

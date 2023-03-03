@@ -1,8 +1,11 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,6 +45,7 @@ class DestinationTest {
 
     @Test
     void testToJson() {
+        testDest.getWishList().addItem(new LocalPlace("place", 2000, Category.ACTIVITIES));
         JSONObject testData = testDest.toJson();
         assertEquals(testDest.getPlaceName(), testData.getString("place name"));
         assertEquals(testDest.getBudget(), testData.getInt("budget"));
@@ -49,4 +53,5 @@ class DestinationTest {
         assertEquals(testDest.getWishList().getListRelated().size(), testData.getJSONArray("wishlist").length());
         assertEquals(testDest.getItineraryList().size(), testData.getJSONArray("itinerary").length());
     }
+
 }

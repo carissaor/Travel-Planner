@@ -1,38 +1,42 @@
 {"destination list": [
-    {
-        "duration": 1,
-        "wishlist": [{
-            "cost": 1,
-            "is chosen": false,
-            "description": "1",
-            "category": "ACTIVITIES"
-        }],
-        "itinerary": [{
-            "each day": [],
-            "description": "Day 1"
-        }],
-        "place name": "place1",
-        "budget": 100
-    },
-    {
-        "duration": 2,
-        "wishlist": [{
-            "cost": 2,
-            "is chosen": false,
-            "description": "2",
-            "category": "FOODS"
-        }],
-        "itinerary": [
-            {
-                "each day": [],
-                "description": "Day 1"
-            },
-            {
-                "each day": [],
-                "description": "Day 2"
-            }
-        ],
-        "place name": "place2",
-        "budget": 200
-    }
+  {
+    "duration": 1,
+    "wishlist": [
+      {
+        "cost": 1,
+        "is chosen": false,
+        "description": "test1",
+        "category": "OTHERS"
+      }
+    ],
+    "itinerary": [{
+      "each day": [],
+      "description": "Day 1"
+    }],
+    "place name": "place1",
+    "budget": 100
+  },
+  {
+    "duration": 2,
+    "wishlist": [
+      {
+        "cost": 2,
+        "is chosen": false,
+        "description": "test2",
+        "category": "ACTIVITIES"
+      }
+    ],
+    "itinerary": [
+      {
+        "each day": [],
+        "description": "Day 1"
+      },
+      {
+        "each day": [],
+        "description": "Day 2"
+      }
+    ],
+    "place name": "place2",
+    "budget": 200
+  }
 ]}

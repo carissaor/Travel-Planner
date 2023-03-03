@@ -1,54 +1,126 @@
-{"destination list": [{
-    "duration": 4,
-    "wishlist": [
-        {
-            "cost": 10,
-            "is chosen": false,
-            "description": "ubc",
-            "category": "ACTIVITIES"
-        },
-        {
-            "cost": 10,
-            "is chosen": false,
-            "description": "art",
-            "category": "ACTIVITIES"
-        },
-        {
-            "cost": 20,
-            "is chosen": false,
-            "description": "food",
-            "category": "FOODS"
-        },
-        {
-            "cost": 70,
-            "is chosen": true,
-            "description": "act",
-            "category": "ACTIVITIES"
-        }
-    ],
-    "itinerary": [
-        {
-            "each day": [],
-            "description": "Day 1"
-        },
-        {
-            "each day": [{
-                "cost": 70,
+{"destination list": [
+    {
+        "duration": 5,
+        "wishlist": [
+            {
+                "cost": 1,
                 "is chosen": true,
-                "description": "act",
+                "description": "ubc",
                 "category": "ACTIVITIES"
-            }],
-            "description": "Day 2"
-        },
-        {
-            "each day": [],
-            "description": "Day 3"
-        },
-        {
-            "each day": [],
-            "description": "Day 4"
-        }
-    ],
-    "place name": "vancouver",
-    "budget": 930
-}]}
+            },
+            {
+                "cost": 2,
+                "is chosen": true,
+                "description": "granville",
+                "category": "FOODS"
+            },
+            {
+                "cost": 10,
+                "is chosen": true,
+                "description": "art",
+                "category": "ACTIVITIES"
+            }
+        ],
+        "itinerary": [
+            {
+                "each day": [
+                    {
+                        "cost": 1,
+                        "is chosen": true,
+                        "description": "ubc",
+                        "category": "ACTIVITIES"
+                    },
+                    {
+                        "cost": 2,
+                        "is chosen": true,
+                        "description": "granville",
+                        "category": "FOODS"
+                    }
+                ],
+                "description": "Day 1"
+            },
+            {
+                "each day": [],
+                "description": "Day 2"
+            },
+            {
+                "each day": [],
+                "description": "Day 3"
+            },
+            {
+                "each day": [],
+                "description": "Day 4"
+            },
+            {
+                "each day": [{
+                    "cost": 10,
+                    "is chosen": true,
+                    "description": "art",
+                    "category": "ACTIVITIES"
+                }],
+                "description": "Day 5"
+            }
+        ],
+        "place name": "vancouver",
+        "budget": 1077
+    },
+    {
+        "duration": 7,
+        "wishlist": [
+            {
+                "cost": 10,
+                "is chosen": true,
+                "description": "tj",
+                "category": "FOODS"
+            },
+            {
+                "cost": 100,
+                "is chosen": true,
+                "description": "hotel",
+                "category": "ACCOMMODATIONS"
+            }
+        ],
+        "itinerary": [
+            {
+                "each day": [{
+                    "cost": 100,
+                    "is chosen": true,
+                    "description": "hotel",
+                    "category": "ACCOMMODATIONS"
+                }],
+                "description": "Day 1"
+            },
+            {
+                "each day": [],
+                "description": "Day 2"
+            },
+            {
+                "each day": [],
+                "description": "Day 3"
+            },
+            {
+                "each day": [],
+                "description": "Day 4"
+            },
+            {
+                "each day": [{
+                    "cost": 10,
+                    "is chosen": true,
+                    "description": "tj",
+                    "category": "FOODS"
+                }],
+                "description": "Day 5"
+            },
+            {
+                "each day": [],
+                "description": "Day 6"
+            },
+            {
+                "each day": [],
+                "description": "Day 7"
+            }
+        ],
+        "place name": "hk",
+        "budget": 890
+    }
+]}
