@@ -13,22 +13,22 @@ public class JsonWriter {
 
     private static final int TAB = 4;
     private PrintWriter writer;
-    private String destination;
+    private String destinationList;
 
-    // EFFECTS: constructs writer to write to destination file
-    public JsonWriter(String destination) {
-        this.destination = destination;
+    // EFFECTS: constructs writer to write to destinationList file
+    public JsonWriter(String destinationList) {
+        this.destinationList = destinationList;
     }
 
     // MODIFIES: this
-    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
+    // EFFECTS: opens writer; throws FileNotFoundException if destinationList file cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destination));
+        writer = new PrintWriter(new File(destinationList));
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of destinationList to file
     public void write(DestinationList dl) {
         JSONObject json = dl.toJson();
         saveToFile(json.toString(TAB));

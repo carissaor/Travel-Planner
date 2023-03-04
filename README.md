@@ -27,7 +27,7 @@ Therefore, a trip planner sounds like an interesting and useful tool to me.
 - As a user, I want to be able to add and remove destination to destination list.
 - As a user, I want to be able to categorize my findings in wishlist. 
 - As a user, I want to be able to keep track of my budget.
-- As a user, I want to be able to modify and view the itinerary of each day.
+- As a user, I want to be able to add and remove the itinerary of each day.
 - As a user, I want to be able to save my destination list to file. (if I so choose)
 - As a user, I want to be able to load my destination list from file. (if I so choose)
 

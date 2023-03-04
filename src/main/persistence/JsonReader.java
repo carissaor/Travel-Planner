@@ -81,9 +81,7 @@ public class JsonReader {
     // MODIFIES: destination
     // EFFECTS: parses itinerary from JSON object and adds it to destination
     private void addItinerary(Destination destination, JSONObject jsonObject) {
-        Integer budget = jsonObject.getInt("budget");
-        Integer duration = jsonObject.getInt("duration");
-        Itinerary itinerary = new Itinerary(budget, duration);
+        Itinerary itinerary = new Itinerary(destination.getBudget(), destination.getDuration());
         addEachDays(itinerary, jsonObject);
         destination.setItinerary(itinerary);
     }
