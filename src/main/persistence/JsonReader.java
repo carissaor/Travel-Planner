@@ -69,6 +69,8 @@ public class JsonReader {
         dl.addItem(destination);
     }
 
+    // MODIFIES: destination
+    // EFFECTS: parses itinerary from JSON object and adds it to destination
     private void addItineraries(Destination destination, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("itinerary");
         int budget = jsonObject.getInt("budget");
@@ -81,6 +83,8 @@ public class JsonReader {
         destination.setItinerary(itinerary);
     }
 
+    // MODIFIES: itinerary
+    // EFFECTS: parses EachDay from JSON object and adds it to itinerary
     private void addEachDay(Itinerary itinerary, JSONObject jsonObject) {
         String text = jsonObject.getString("description");
         EachDay eachDay = new EachDay(text);

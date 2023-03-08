@@ -297,6 +297,20 @@ public class App {
 
     }
 
+    // EFFECTS: prints the current wishlist
+    private void viewWishListForEdit(Destination destination) {
+        ArrayList<LocalPlace> wishList = destination.getWishList().getListRelated();
+        System.out.println("ACTIVITIES");
+        printWL(wishList, Category.ACTIVITIES);
+        System.out.println("FOODS");
+        printWL(wishList, Category.FOODS);
+        System.out.println("ACCOMMODATION");
+        printWL(wishList, Category.ACCOMMODATIONS);
+        System.out.println("OTHERS");
+        printWL(wishList, Category.OTHERS);
+
+    }
+
     // EFFECTS: helper function for viewWishList method to help categorize wishlist
     private void printWL(ArrayList<LocalPlace> wishList, Category category) {
         for (LocalPlace localPlace : wishList) {
@@ -329,7 +343,7 @@ public class App {
         System.out.println("V -> view itinerary");
         String input = userInput.next().toUpperCase();
         if (input.equals("A")) {
-            viewWishList(destination);
+            viewWishListForEdit(destination);
             System.out.println("Which place would you like to add to itinerary?");
             chooseInfo = userInput.next().toLowerCase();
             editingItinerary(chooseInfo, true);
