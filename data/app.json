@@ -1,6 +1,6 @@
 {"destination list": [
     {
-        "duration": 4,
+        "duration": 3,
         "wishlist": [{
             "cost": 10,
             "is chosen": true,
@@ -13,52 +13,46 @@
                 "description": "Day 1"
             },
             {
-                "each day": [],
-                "description": "Day 2"
-            },
-            {
                 "each day": [{
                     "cost": 10,
                     "is chosen": true,
                     "description": "ubc",
                     "category": "ACTIVITIES"
                 }],
-                "description": "Day 3"
+                "description": "Day 2"
             },
             {
                 "each day": [],
-                "description": "Day 4"
+                "description": "Day 3"
             }
         ],
         "place name": "vancouver",
         "budget": 990
     },
     {
-        "duration": 1,
-        "wishlist": [
+        "duration": 2,
+        "wishlist": [{
+            "cost": 10,
+            "is chosen": true,
+            "description": "ferry",
+            "category": "OTHERS"
+        }],
+        "itinerary": [
             {
-                "cost": 30,
-                "is chosen": false,
-                "description": "ferry",
-                "category": "ACCOMMODATIONS"
+                "each day": [{
+                    "cost": 10,
+                    "is chosen": true,
+                    "description": "ferry",
+                    "category": "OTHERS"
+                }],
+                "description": "Day 1"
             },
             {
-                "cost": 20,
-                "is chosen": true,
-                "description": "food",
-                "category": "FOODS"
+                "each day": [],
+                "description": "Day 2"
             }
         ],
-        "itinerary": [{
-            "each day": [{
-                "cost": 20,
-                "is chosen": true,
-                "description": "food",
-                "category": "FOODS"
-            }],
-            "description": "Day 1"
-        }],
-        "place name": "victoria",
-        "budget": 280
+        "place name": "vic",
+        "budget": 390
     }
 ]}

@@ -50,7 +50,7 @@ public class JsonReaderTest extends JsonTest {
             checkLocalPlace("test1", 1, Category.ACTIVITIES,
                     destinations.get(0).getWishList().getListRelated().get(0));
             checkLocalPlace("test2", 2, Category.FOODS,
-                    destinations.get(1).getItinerary().getItineraryList().get(2).getListRelated().get(0));
+                    destinations.get(1).getItinerary().getItineraryList().get(1).getListRelated().get(0));
 
         } catch (IOException e) {
             fail("Couldn't read from file");

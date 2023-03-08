@@ -189,7 +189,8 @@ public class App {
         command = userInput.next().toUpperCase();
         if (command.equals("E")) {
             if (dl.size() == 1) {
-                editDest(destinationList.getListRelated().get(0));
+                destination = destinationList.getListRelated().get(0);
+                editDest(destination);
             } else {
                 System.out.println("Which destination?");
                 destName = userInput.next().toLowerCase();

@@ -26,6 +26,15 @@ public class Itinerary implements Writable {
         }
     }
 
+    public void setItineraryList(EachDay eachDay) {
+        for (int i = 0; i < itineraryList.size(); i++) {
+            if (itineraryList.get(i).getText().equals(eachDay.getText())) {
+                itineraryList.set(i, eachDay);
+            }
+        }
+    }
+
+
     // REQUIRES: 1 <= day <= duration, info.getCost() <= budgetLeft,
     // if LocalPlace IsChosen is false, the LocalPlace should be in itinerary already
     // EFFECTS: If the local place is chosen, add to itinerary according to day number and minus budget by the cost
