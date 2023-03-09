@@ -91,14 +91,20 @@ public class JsonReader {
         JSONArray jsonArray = jsonObject.getJSONArray("each day");
         for (Object json : jsonArray) {
             JSONObject next = (JSONObject) json;
-            String description = next.getString("description");
-            int cost = next.getInt("cost");
-            String categoryString = next.getString("category");
-            Category category = Category.valueOf(categoryString.toUpperCase());
-            LocalPlace localPlace = new LocalPlace(description, cost, category);
-            eachDay.getListRelated().add(localPlace);
+            addLocalPlaceItinerary(eachDay, next);
         }
         itinerary.setItineraryList(eachDay);
+    }
+
+    // MODIFIES: eachDay
+    // EFFECTS: parses localPLace from JSON object and adds them to EachDay
+    private void addLocalPlaceItinerary(EachDay eachDay, JSONObject jsonObject) {
+        String description = jsonObject.getString("description");
+        int cost = jsonObject.getInt("cost");
+        String categoryString = jsonObject.getString("category");
+        Category category = Category.valueOf(categoryString.toUpperCase());
+        LocalPlace localPlace = new LocalPlace(description, cost, category);
+        eachDay.getListRelated().add(localPlace);
     }
 
     // MODIFIES: wl
