@@ -1,69 +1,38 @@
 {"destination list": [
     {
-        "duration": 4,
-        "wishlist": [
-            {
-                "cost": 10,
-                "is chosen": false,
-                "description": "ubc",
-                "category": "ACTIVITIES"
-            },
-            {
-                "cost": 10,
-                "is chosen": false,
-                "description": "art",
-                "category": "OTHERS"
-            }
-        ],
+        "duration": 3,
+        "wishlist": [],
         "itinerary": [
             {
                 "each day": [],
                 "description": "Day 1"
             },
             {
-                "each day": [{
-                    "cost": 10,
-                    "is chosen": false,
-                    "description": "ubc",
-                    "category": "ACTIVITIES"
-                }],
+                "each day": [],
                 "description": "Day 2"
             },
             {
-                "each day": [{
-                    "cost": 10,
-                    "is chosen": false,
-                    "description": "art",
-                    "category": "OTHERS"
-                }],
+                "each day": [],
                 "description": "Day 3"
+            }
+        ],
+        "place name": "test",
+        "budget": 300
+    },
+    {
+        "duration": 2,
+        "wishlist": [],
+        "itinerary": [
+            {
+                "each day": [],
+                "description": "Day 1"
             },
             {
                 "each day": [],
-                "description": "Day 4"
+                "description": "Day 2"
             }
         ],
-        "place name": "vancouver",
-        "budget": 180
-    },
-    {
-        "duration": 1,
-        "wishlist": [{
-            "cost": 10,
-            "is chosen": true,
-            "description": "ferry",
-            "category": "OTHERS"
-        }],
-        "itinerary": [{
-            "each day": [{
-                "cost": 10,
-                "is chosen": true,
-                "description": "ferry",
-                "category": "OTHERS"
-            }],
-            "description": "Day 1"
-        }],
-        "place name": "victoria",
-        "budget": 290
+        "place name": "test2",
+        "budget": 500
     }
 ]}
