@@ -87,7 +87,7 @@ public class Gui extends JFrame {
         add(buttonPanel, BorderLayout.EAST);
     }
 
-    // when add button is clicked
+    // pop up window when add button is clicked
     private void addDestination() {
         JFrame frame = new JFrame("Add Destination");
         frame.setPreferredSize(new Dimension(200, 200));
@@ -129,7 +129,6 @@ public class Gui extends JFrame {
 
         // Create a new bodyPanel with the updated list of destinations
         JPanel bodyPanel = new JPanel();
-
         bodyPanel.setName("bodyPanel");
         for (Destination destination : destinationList.getListRelated()) {
             JButton nameButton = new JButton(destination.getPlaceName());
@@ -151,6 +150,12 @@ public class Gui extends JFrame {
             bodyPanel.add(destinationPanel);
         }
 
+        rightButton.setText("Add");
+        rightButton.removeActionListener(rightButton.getActionListeners()[0]);
+        rightButton.addActionListener(e -> {
+            addDestination();
+        });
+
         add(bodyPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -160,21 +165,40 @@ public class Gui extends JFrame {
     // TODO change the function of add button on the right,
     // TODO allow users to change duration and budget
     private void editDestination(Destination destination) {
+        setHomeButton();
+
+        removeOldPanel();
+        JLabel infoLabel = new JLabel(destination.getPlaceName());
+        JLabel durationLabel = new JLabel(String.valueOf(destination.getDuration()));
+        JButton addDayButton = new JButton("+");
+        addDayButton.addActionListener(e -> {
+            destination.getItinerary().setDuration(1);
+            durationLabel.setText(String.valueOf(destination.getDuration()));
+        });
+
+        JButton minusDayButton = new JButton("-");
+        minusDayButton.addActionListener(e -> {
+            destination.getItinerary().setDuration(-1);
+            durationLabel.setText(String.valueOf(destination.getDuration()));
+        });
+
+        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        infoPanel.setName("info");
+        infoPanel.add(infoLabel);
+        infoPanel.add(durationLabel);
+        infoPanel.add(addDayButton);
+        infoPanel.add(minusDayButton);
+        add(infoPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void setHomeButton() {
         rightButton.setText("Home");
         rightButton.removeActionListener(rightButton.getActionListeners()[0]);
         rightButton.addActionListener(e -> {
             displayDestinations();
         });
-
-        removeOldPanel();
-        JLabel infoLabel = new JLabel(destination.getPlaceName());
-        JPanel infoPanel = new JPanel();
-        infoPanel.setName("info");
-        infoPanel.add(infoLabel);
-
-        add(infoPanel, BorderLayout.CENTER);
-        revalidate();
-        repaint();
     }
 
 
