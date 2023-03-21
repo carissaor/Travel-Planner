@@ -1,38 +1,10 @@
-{"destination list": [
-    {
-        "duration": 3,
-        "wishlist": [],
-        "itinerary": [
-            {
-                "each day": [],
-                "description": "Day 1"
-            },
-            {
-                "each day": [],
-                "description": "Day 2"
-            },
-            {
-                "each day": [],
-                "description": "Day 3"
-            }
-        ],
-        "place name": "test",
-        "budget": 300
-    },
-    {
-        "duration": 2,
-        "wishlist": [],
-        "itinerary": [
-            {
-                "each day": [],
-                "description": "Day 1"
-            },
-            {
-                "each day": [],
-                "description": "Day 2"
-            }
-        ],
-        "place name": "test2",
-        "budget": 500
-    }
-]}
+{"destination list": [{
+    "duration": 1,
+    "wishlist": [],
+    "itinerary": [{
+        "each day": [],
+        "description": "Day 1"
+    }],
+    "place name": "test3",
+    "budget": 200
+}]}

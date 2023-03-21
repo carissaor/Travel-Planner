@@ -6,15 +6,13 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
+// TODO remove destination, filter destination, splash screen
 public class Gui extends JFrame {
 
     public static final int WIDTH = 900;
@@ -25,13 +23,14 @@ public class Gui extends JFrame {
     private JsonReader jsonReader;
 
     private DestinationList destinationList;
+    private JButton rightButton;
 
     public Gui() {
         super("Trip Planner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializeApp();
 
-        splashScreen();
+//        splashScreen();
         loadApp();
         displayDestinations();
         saveApp();
@@ -79,15 +78,16 @@ public class Gui extends JFrame {
 
     private void initializeRight() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton addButton = new JButton("Add");
-        addButton.addActionListener(e -> {
+        rightButton = new JButton("Add");
+        rightButton.addActionListener(e -> {
             addDestination();
         });
 
-        buttonPanel.add(addButton, BorderLayout.EAST);
+        buttonPanel.add(rightButton, BorderLayout.EAST);
         add(buttonPanel, BorderLayout.EAST);
     }
 
+    // when add button is clicked
     private void addDestination() {
         JFrame frame = new JFrame("Add Destination");
         frame.setPreferredSize(new Dimension(200, 200));
@@ -101,7 +101,7 @@ public class Gui extends JFrame {
         fieldsPanel.add(addBudget);
         fieldsPanel.add(new JLabel("Duration:"));
         fieldsPanel.add(addDuration);
-        JButton addButton = new JButton("Add");
+        JButton addButton = new JButton("Save");
         addButton.addActionListener(e -> {
             if (addName.getText().equals("") || addBudget.getText().equals("") || addDuration.getText().equals("")) {
                 JOptionPane.showMessageDialog(frame, "Please enter all info");
@@ -119,14 +119,17 @@ public class Gui extends JFrame {
         frame.add(fieldsPanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
+    // TODO set Add button when come back from Home
     private void displayDestinations() {
         removeOldPanel();
 
         // Create a new bodyPanel with the updated list of destinations
         JPanel bodyPanel = new JPanel();
+
         bodyPanel.setName("bodyPanel");
         for (Destination destination : destinationList.getListRelated()) {
             JButton nameButton = new JButton(destination.getPlaceName());
@@ -135,14 +138,19 @@ public class Gui extends JFrame {
             });
             JLabel budgetLabel = new JLabel("Budget: " + destination.getBudget());
             JLabel durationLabel = new JLabel("Duration: " + destination.getDuration());
-            JPanel destinationPanel = new JPanel(new GridLayout(3, 1));
+            JButton removeButton = new JButton("Remove");
+            removeButton.addActionListener(e -> {
+                destinationList.removeItem(destination.getPlaceName());
+                displayDestinations();
+            });
+            JPanel destinationPanel = new JPanel(new GridLayout(4, 1));
             destinationPanel.add(nameButton);
             destinationPanel.add(budgetLabel);
             destinationPanel.add(durationLabel);
+            destinationPanel.add(removeButton);
             bodyPanel.add(destinationPanel);
         }
 
-        // Add the new bodyPanel to the JFrame and update the GUI
         add(bodyPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -152,15 +160,23 @@ public class Gui extends JFrame {
     // TODO change the function of add button on the right,
     // TODO allow users to change duration and budget
     private void editDestination(Destination destination) {
-        removeOldPanel();
+        rightButton.setText("Home");
+        rightButton.removeActionListener(rightButton.getActionListeners()[0]);
+        rightButton.addActionListener(e -> {
+            displayDestinations();
+        });
 
-        JPanel infoPanel = new JPanel();
+        removeOldPanel();
         JLabel infoLabel = new JLabel(destination.getPlaceName());
+        JPanel infoPanel = new JPanel();
+        infoPanel.setName("info");
         infoPanel.add(infoLabel);
+
         add(infoPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
     }
+
 
     // helper function to remove old panel
     private void removeOldPanel() {
@@ -168,22 +184,26 @@ public class Gui extends JFrame {
         for (Component component : components) {
             if (component instanceof JPanel) {
                 JPanel panel = (JPanel) component;
-                if (panel.getName() != null && panel.getName().equals("bodyPanel")) {
+                if (panel.getName() != null && panel.getName().equals("bodyPanel") ||
+                        panel.getName() != null && panel.getName().equals("info")) {
                     remove(panel);
                 }
             }
         }
     }
 
-    // Todo: pic overlap with title with title on top
     private void initializeHeader() {
-        JPanel headerPanel = new JPanel();
-        JLabel header = new JLabel();
+        JLayeredPane headerPanel = new JLayeredPane();
         ImageIcon headerImage = new ImageIcon("./data/earth.jpeg");
-        header.setIcon(headerImage);
-        header.setText("Destinations");
-        headerPanel.add(header);
-        headerPanel.setPreferredSize(new Dimension(100, 100));
+        JLabel headerImg = new JLabel(headerImage);
+        headerImg.setBounds(0, 0, headerImage.getIconWidth(), 100);
+        JLabel headerText = new JLabel("Destinations", SwingConstants.LEFT);
+        headerText.setForeground(Color.WHITE);
+        headerText.setFont(new Font(null,Font.BOLD, 30));
+        headerText.setBounds(20, 20, headerImage.getIconWidth(), 100);
+        headerPanel.add(headerImg, Integer.valueOf(0));
+        headerPanel.add(headerText, Integer.valueOf(1));
+        headerPanel.setPreferredSize(new Dimension(headerImage.getIconWidth(), 100));
         add(headerPanel, BorderLayout.NORTH);
     }
 

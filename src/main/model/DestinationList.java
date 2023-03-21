@@ -11,6 +11,9 @@ import java.util.function.Consumer;
 
 public class DestinationList extends ListRelated<Destination> implements Writable {
 
+    public void removeItem(String name) {
+        super.getListRelated().removeIf(destination -> destination.getPlaceName().equals(name));
+    }
 
     @Override
     public JSONObject toJson() {
