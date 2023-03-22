@@ -1,28 +1,51 @@
-{"destination list": [{
-    "duration": 5,
-    "wishlist": [],
-    "itinerary": [
-        {
-            "each day": [],
-            "description": "Day 1"
-        },
-        {
-            "each day": [],
-            "description": "Day 2"
-        },
-        {
-            "each day": [],
-            "description": "Day 3"
-        },
-        {
-            "each day": [],
-            "description": "Day 4"
-        },
-        {
-            "each day": [],
-            "description": "Day 5"
-        }
-    ],
-    "place name": "test3",
-    "budget": 200
-}]}
+{"destination list": [
+    {
+        "duration": 4,
+        "wishlist": [{
+            "cost": 1,
+            "is chosen": true,
+            "description": "test1",
+            "category": "ACTIVITIES"
+        }],
+        "itinerary": [
+            {
+                "each day": [],
+                "description": "Day 1"
+            },
+            {
+                "each day": [],
+                "description": "Day 2"
+            },
+            {
+                "each day": [],
+                "description": "Day 3"
+            },
+            {
+                "each day": [],
+                "description": "Day 4"
+            }
+        ],
+        "place name": "Vancouver",
+        "budget": 100
+    },
+    {
+        "duration": 3,
+        "wishlist": [],
+        "itinerary": [
+            {
+                "each day": [],
+                "description": "Day 1"
+            },
+            {
+                "each day": [],
+                "description": "Day 2"
+            },
+            {
+                "each day": [],
+                "description": "Day 3"
+            }
+        ],
+        "place name": "Victoria",
+        "budget": 300
+    }
+]}

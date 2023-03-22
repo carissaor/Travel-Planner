@@ -1,7 +1,6 @@
 package ui;
 
-import model.Destination;
-import model.DestinationList;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -11,8 +10,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
-// TODO remove destination, filter destination, splash screen
+// TODO place everything, (filter destination), (progress bar),
+//  JList for wishlist and itinerary
 public class Gui extends JFrame {
 
     public static final int WIDTH = 900;
@@ -90,7 +91,7 @@ public class Gui extends JFrame {
     // pop up window when add button is clicked
     private void addDestination() {
         JFrame frame = new JFrame("Add Destination");
-        frame.setPreferredSize(new Dimension(200, 200));
+        frame.setPreferredSize(new Dimension(350, 200));
         JTextField addName = new JTextField();
         JTextField addBudget = new JTextField();
         JTextField addDuration = new JTextField();
@@ -123,7 +124,6 @@ public class Gui extends JFrame {
         frame.setVisible(true);
     }
 
-    // TODO set Add button when come back from Home
     private void displayDestinations() {
         removeOldPanel();
 
@@ -162,35 +162,71 @@ public class Gui extends JFrame {
     }
 
     // edit destination page
-    // TODO change the function of add button on the right,
-    // TODO allow users to change duration and budget
     private void editDestination(Destination destination) {
         setHomeButton();
-
         removeOldPanel();
         JLabel infoLabel = new JLabel(destination.getPlaceName());
-        JLabel durationLabel = new JLabel(String.valueOf(destination.getDuration()));
+        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        infoPanel.setName("info");
+        infoPanel.add(infoLabel);
+        infoPanel.add(durationPanel(destination));
+        infoPanel.add(wishListPanel(destination));
+        infoPanel.add(itineraryPanel(destination));
+        add(infoPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private JPanel durationPanel(Destination destination) {
+        String content = "Duration: ";
+        JPanel durationPanel = new JPanel();
+        JLabel durationLabel = new JLabel(content + destination.getDuration());
         JButton addDayButton = new JButton("+");
         addDayButton.addActionListener(e -> {
             destination.getItinerary().setDuration(1);
-            durationLabel.setText(String.valueOf(destination.getDuration()));
+            durationLabel.setText(content + destination.getDuration());
         });
 
         JButton minusDayButton = new JButton("-");
         minusDayButton.addActionListener(e -> {
             destination.getItinerary().setDuration(-1);
-            durationLabel.setText(String.valueOf(destination.getDuration()));
+            durationLabel.setText(content + destination.getDuration());
         });
 
-        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        infoPanel.setName("info");
-        infoPanel.add(infoLabel);
-        infoPanel.add(durationLabel);
-        infoPanel.add(addDayButton);
-        infoPanel.add(minusDayButton);
-        add(infoPanel, BorderLayout.CENTER);
-        revalidate();
-        repaint();
+        durationPanel.add(durationLabel);
+        durationPanel.add(addDayButton);
+        durationPanel.add(minusDayButton);
+
+        return durationPanel;
+    }
+
+    private JPanel wishListPanel(Destination destination) {
+        JPanel wishListPanel = new JPanel();
+        WishList wishList = destination.getWishList();
+        JLabel wishListLabel = new JLabel();
+        for (LocalPlace localPlace : wishList.getListRelated()) {
+            if (localPlace.getCategory() == Category.ACTIVITIES) {
+                wishListLabel.setText(localPlace.getDescription());
+            }
+        }
+        wishListPanel.add(wishListLabel);
+        return wishListPanel;
+    }
+
+    private JPanel itineraryPanel(Destination destination) {
+        JPanel itineraryPanel = new JPanel();
+        ArrayList<EachDay> itineraryList = destination.getItineraryList();
+        for (EachDay eachDay : itineraryList) {
+            JLabel dayNum = new JLabel(eachDay.getText());
+            JLabel placeDetails = new JLabel();
+            itineraryPanel.add(dayNum);
+            if (eachDay.getListRelated().size() > 0) {
+                placeDetails.setText(eachDay.getListRelated().get(itineraryList.indexOf(eachDay)).getDescription());
+                itineraryPanel.add(placeDetails);
+            }
+        }
+        return itineraryPanel;
     }
 
     private void setHomeButton() {
@@ -201,15 +237,14 @@ public class Gui extends JFrame {
         });
     }
 
-
     // helper function to remove old panel
     private void removeOldPanel() {
         Component[] components = getContentPane().getComponents();
         for (Component component : components) {
             if (component instanceof JPanel) {
                 JPanel panel = (JPanel) component;
-                if (panel.getName() != null && panel.getName().equals("bodyPanel") ||
-                        panel.getName() != null && panel.getName().equals("info")) {
+                if (panel.getName() != null && (panel.getName().equals("bodyPanel") ||
+                        panel.getName().equals("info"))) {
                     remove(panel);
                 }
             }
@@ -223,7 +258,7 @@ public class Gui extends JFrame {
         headerImg.setBounds(0, 0, headerImage.getIconWidth(), 100);
         JLabel headerText = new JLabel("Destinations", SwingConstants.LEFT);
         headerText.setForeground(Color.WHITE);
-        headerText.setFont(new Font(null,Font.BOLD, 30));
+        headerText.setFont(new Font(null, Font.BOLD, 30));
         headerText.setBounds(20, 20, headerImage.getIconWidth(), 100);
         headerPanel.add(headerImg, Integer.valueOf(0));
         headerPanel.add(headerText, Integer.valueOf(1));
