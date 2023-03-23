@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// TODO place everything, (filter destination), (progress bar),
+// TODO place everything
 //  JList for wishlist and itinerary
 public class Gui extends JFrame {
 
@@ -25,13 +25,15 @@ public class Gui extends JFrame {
 
     private DestinationList destinationList;
     private JButton rightButton;
+    private JPanel bodyPanel;
 
     public Gui() {
         super("Trip Planner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         initializeApp();
 
-//        splashScreen();
+        splashScreen();
         loadApp();
         displayDestinations();
         saveApp();
@@ -66,6 +68,7 @@ public class Gui extends JFrame {
         }
         splashScreen.dispose();
     }
+
 
     private void initializeApp() {
         destinationList = new DestinationList();
@@ -125,10 +128,10 @@ public class Gui extends JFrame {
     }
 
     private void displayDestinations() {
-        removeOldPanel();
-
-        // Create a new bodyPanel with the updated list of destinations
-        JPanel bodyPanel = new JPanel();
+        if (bodyPanel != null) {
+            remove(bodyPanel);
+        }
+        bodyPanel = new JPanel();
         bodyPanel.setName("bodyPanel");
         for (Destination destination : destinationList.getListRelated()) {
             JButton nameButton = new JButton(destination.getPlaceName());
@@ -149,31 +152,35 @@ public class Gui extends JFrame {
             destinationPanel.add(removeButton);
             bodyPanel.add(destinationPanel);
         }
-
-        rightButton.setText("Add");
-        rightButton.removeActionListener(rightButton.getActionListeners()[0]);
-        rightButton.addActionListener(e -> {
-            addDestination();
-        });
-
+        setAddButton();
         add(bodyPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
     }
 
+    private void setAddButton() {
+        rightButton.setText("Add");
+        rightButton.removeActionListener(rightButton.getActionListeners()[0]);
+        rightButton.addActionListener(e -> {
+            addDestination();
+        });
+    }
+
     // edit destination page
     private void editDestination(Destination destination) {
         setHomeButton();
-        removeOldPanel();
+        remove(bodyPanel);
+        JPanel placeNamePanel = new JPanel();
         JLabel infoLabel = new JLabel(destination.getPlaceName());
-        JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-        infoPanel.setName("info");
-        infoPanel.add(infoLabel);
-        infoPanel.add(durationPanel(destination));
-        infoPanel.add(wishListPanel(destination));
-        infoPanel.add(itineraryPanel(destination));
-        add(infoPanel, BorderLayout.CENTER);
+        infoLabel.setFont(new Font(null, Font.BOLD, 30));
+        placeNamePanel.add(infoLabel);
+        bodyPanel = new JPanel(new GridLayout(8, 1));
+        bodyPanel.add(placeNamePanel);
+        bodyPanel.add(durationPanel(destination));
+//        bodyPanel.add(budgetPanel(destination));
+        bodyPanel.add(wishListPanel(destination));
+        bodyPanel.add(itineraryPanel(destination));
+        add(bodyPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
     }
@@ -203,15 +210,62 @@ public class Gui extends JFrame {
 
     private JPanel wishListPanel(Destination destination) {
         JPanel wishListPanel = new JPanel();
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(e -> {
+            addWishlist(destination);
+        });
         WishList wishList = destination.getWishList();
-        JLabel wishListLabel = new JLabel();
-        for (LocalPlace localPlace : wishList.getListRelated()) {
-            if (localPlace.getCategory() == Category.ACTIVITIES) {
-                wishListLabel.setText(localPlace.getDescription());
+        for (Category category : Category.values()) {
+            JLabel titleLabel = new JLabel(String.valueOf(category));
+            wishListPanel.add(titleLabel);
+            for (LocalPlace localPlace : wishList.getListRelated()) {
+                if (localPlace.getCategory() == category) {
+                    JLabel wishListLabel = new JLabel();
+                    wishListLabel.setText(localPlace.getDescription());
+                    wishListPanel.add(wishListLabel);
+                }
             }
         }
-        wishListPanel.add(wishListLabel);
+
+        wishListPanel.add(addButton);
         return wishListPanel;
+    }
+
+    private void addWishlist(Destination destination) {
+
+        JFrame frame = new JFrame("Add items");
+        frame.setPreferredSize(new Dimension(350, 200));
+        JTextField addName = new JTextField();
+        JTextField addBudget = new JTextField();
+        Category[] category = {Category.ACTIVITIES, Category.FOODS, Category.ACCOMMODATIONS, Category.OTHERS};
+        JComboBox categoryBox = new JComboBox<>(category);
+        JPanel fieldsPanel = new JPanel(new GridLayout(3, 1));
+        fieldsPanel.add(new JLabel("Name:"));
+        fieldsPanel.add(addName);
+        fieldsPanel.add(new JLabel("Budget:"));
+        fieldsPanel.add(addBudget);
+        fieldsPanel.add(new JLabel("Category:"));
+        fieldsPanel.add(categoryBox);
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(e -> {
+            if (addName.getText().equals("") || addBudget.getText().equals("")) {
+                JOptionPane.showMessageDialog(frame, "Please enter all info");
+            } else {
+                String name = addName.getText();
+                int budget = Integer.parseInt(addBudget.getText());
+                LocalPlace newPlace = new LocalPlace(name, budget, (Category) categoryBox.getSelectedItem());
+                destination.getWishList().addItem(newPlace);
+                editDestination(destination);
+                frame.dispose();
+            }
+        });
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(addButton);
+        frame.add(fieldsPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private JPanel itineraryPanel(Destination destination) {
@@ -237,20 +291,6 @@ public class Gui extends JFrame {
         });
     }
 
-    // helper function to remove old panel
-    private void removeOldPanel() {
-        Component[] components = getContentPane().getComponents();
-        for (Component component : components) {
-            if (component instanceof JPanel) {
-                JPanel panel = (JPanel) component;
-                if (panel.getName() != null && (panel.getName().equals("bodyPanel") ||
-                        panel.getName().equals("info"))) {
-                    remove(panel);
-                }
-            }
-        }
-    }
-
     private void initializeHeader() {
         JLayeredPane headerPanel = new JLayeredPane();
         ImageIcon headerImage = new ImageIcon("./data/earth.jpeg");
@@ -269,9 +309,9 @@ public class Gui extends JFrame {
     // MODIFIES: this
     // EFFECTS: load the app from file
     private void loadApp() {
-        int load = JOptionPane.showConfirmDialog(null, "load stored data?",
-                "load app", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (load == JOptionPane.YES_OPTION) {
+        int loadOption = JOptionPane.showConfirmDialog(null, "load stored data?",
+                "Load App", JOptionPane.YES_NO_OPTION);
+        if (loadOption == JOptionPane.YES_OPTION) {
             try {
                 destinationList = jsonReader.read();
             } catch (IOException e) {

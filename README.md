@@ -31,5 +31,12 @@ Therefore, a trip planner sounds like an interesting and useful tool to me.
 - As a user, I want to be able to save my destination list to file. (if I so choose)
 - As a user, I want to be able to load my destination list from file. (if I so choose)
 
- 
+## Instructions for Grader
+- You can generate the first required action related to adding Xs to a Y by clicking the button with text "Add" to add
+new destinations to the existing list of destinations
+- You can generate the second required action related to adding Xs to a Y by clicking the button with text "Remove" to 
+remove the chosen destination from the existing list of destinations
+- You can locate my visual component by loading the app (splash screen)
+- You can save the state of my application by pressing yes in a popup window that shows before quitting the application.
+- You can reload the state of my application by pressing yes in a popup window when starting the application.
 
