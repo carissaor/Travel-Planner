@@ -3,15 +3,15 @@
         "duration": 3,
         "wishlist": [
             {
-                "cost": 1,
+                "cost": 100,
                 "is chosen": false,
-                "description": "test1",
+                "description": "ubc",
                 "category": "ACTIVITIES"
             },
             {
-                "cost": 100,
+                "cost": 30,
                 "is chosen": false,
-                "description": "test2",
+                "description": "sfu",
                 "category": "ACTIVITIES"
             }
         ],
@@ -33,7 +33,7 @@
         "budget": 100
     },
     {
-        "duration": 3,
+        "duration": 2,
         "wishlist": [],
         "itinerary": [
             {
@@ -43,13 +43,9 @@
             {
                 "each day": [],
                 "description": "Day 2"
-            },
-            {
-                "each day": [],
-                "description": "Day 3"
             }
         ],
         "place name": "Victoria",
-        "budget": 300
+        "budget": 400
     }
 ]}
