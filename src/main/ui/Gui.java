@@ -5,7 +5,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -81,9 +80,7 @@ public class Gui extends JFrame {
     private void initializeRight() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButton = new JButton("Add");
-        rightButton.addActionListener(e -> {
-            addDestination();
-        });
+        rightButton.addActionListener(e -> addDestination());
 
         buttonPanel.add(rightButton, BorderLayout.EAST);
         add(buttonPanel, BorderLayout.EAST);
@@ -133,9 +130,7 @@ public class Gui extends JFrame {
         bodyPanel.setName("bodyPanel");
         for (Destination destination : destinationList.getListRelated()) {
             JButton nameButton = new JButton(destination.getPlaceName());
-            nameButton.addActionListener(e -> {
-                editDestination(destination);
-            });
+            nameButton.addActionListener(e -> editDestination(destination));
             JLabel budgetLabel = new JLabel("Budget: " + destination.getBudget());
             JLabel durationLabel = new JLabel("Duration: " + destination.getDuration());
             JButton removeButton = new JButton("Remove");
@@ -164,9 +159,7 @@ public class Gui extends JFrame {
     private void setAddButton() {
         rightButton.setText("Add");
         rightButton.removeActionListener(rightButton.getActionListeners()[0]);
-        rightButton.addActionListener(e -> {
-            addDestination();
-        });
+        rightButton.addActionListener(e -> addDestination());
     }
 
     // edit destination page
@@ -207,6 +200,10 @@ public class Gui extends JFrame {
 
         JButton minusDayButton = new JButton("-");
         minusDayButton.addActionListener(e -> {
+            EachDay day = destination.getItinerary().getItineraryList().get(destination.getItineraryList().size() - 1);
+            if (day.getListRelated().size() != 0){
+                doCalculation(day, destination);
+            }
             destination.getItinerary().setDuration(-1);
             durationLabel.setText(content + destination.getDuration());
             editDestination(destination);
@@ -219,20 +216,31 @@ public class Gui extends JFrame {
         return durationPanel;
     }
 
+    private void doCalculation(EachDay eachDay, Destination destination) {
+        for (LocalPlace localPlace : eachDay.getListRelated()) {
+            localPlace.removeThis();
+            destination.getItinerary().editItinerary(eachDay.getListRelated().indexOf(localPlace) + 1, localPlace);
+        }
+    }
+
     private JPanel budgetPanel(Destination destination) {
+
         String content = "Budget: ";
+        int budget = destination.getItinerary().getBudgetLeft();
         JPanel budgetPanel = new JPanel();
-        JLabel durationLabel = new JLabel(content + destination.getBudget());
+        JLabel durationLabel = new JLabel(content + budget);
         JButton addButton = new JButton("+");
         addButton.addActionListener(e -> {
             destination.getItinerary().setBudget(1);
-            durationLabel.setText(content + destination.getBudget());
+            durationLabel.setText(content + budget);
+            editDestination(destination);
         });
 
         JButton minusButton = new JButton("-");
         minusButton.addActionListener(e -> {
             destination.getItinerary().setBudget(-1);
-            durationLabel.setText(content + destination.getBudget());
+            durationLabel.setText(content + budget);
+            editDestination(destination);
         });
 
         budgetPanel.add(durationLabel);
@@ -265,14 +273,12 @@ public class Gui extends JFrame {
         return wrapPanel;
     }
 
-    private JScrollPane wishListPanel(Destination destination) {
+    private JPanel wishListPanel(Destination destination) {
         JPanel wishListPanel = new JPanel(new BorderLayout());
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton addButton = new JButton("Add");
         addButton.setPreferredSize(new Dimension(50, 20));
-        addButton.addActionListener(e -> {
-            addWishlist(destination);
-        });
+        addButton.addActionListener(e -> addWishlist(destination));
         buttonPanel.add(addButton);
         WishList wishList = destination.getWishList();
         JPanel contentPanel = new JPanel(new GridLayout(2, 2));
@@ -284,9 +290,7 @@ public class Gui extends JFrame {
             for (LocalPlace localPlace : wishList.getListRelated()) {
                 if (localPlace.getCategory() == category) {
                     JButton wishListButton = new JButton(localPlace.getDescription());
-                    wishListButton.addActionListener(e -> {
-                        addToItinerary(destination);
-                    });
+                    wishListButton.addActionListener(e -> addToItinerary(destination, localPlace));
                     categoryPanel.add(wishListButton);
                 }
             }
@@ -294,30 +298,30 @@ public class Gui extends JFrame {
         }
         wishListPanel.add(contentPanel, BorderLayout.CENTER);
         wishListPanel.add(buttonPanel, BorderLayout.EAST);
-        JScrollPane scrollPane = new JScrollPane(wishListPanel);
-//        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        return scrollPane;
+        return wishListPanel;
     }
 
-    private void addToItinerary(Destination destination) {
+
+    private void addToItinerary(Destination destination, LocalPlace localPlace) {
         JFrame frame = new JFrame("Add to itinerary");
         frame.setPreferredSize(new Dimension(350, 200));
-        JTextField addName = new JTextField();
-        JTextField addBudget = new JTextField();
-        int numDays = destination.getItinerary().getItineraryList().size();
-        Integer[] dayNum = new Integer[numDays];
-        for (int i = 0; i < numDays; i++) {
-            dayNum[i] = i + 1;
-        }
-        JComboBox<Integer> dayNumBox = new JComboBox<>(dayNum);
+
+        JComboBox<Integer> dayNumBox = comboBox(destination);
+
         JPanel fieldsPanel = new JPanel();
         fieldsPanel.add(new JLabel("Which day:"));
         fieldsPanel.add(dayNumBox);
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
-            System.out.println("ok");
-            frame.dispose();
-
+            if (!destination.getItinerary().withinBudget(localPlace)) {
+                JOptionPane.showMessageDialog(frame, "Out budget");
+            } else {
+                int chosenDay = (int) dayNumBox.getSelectedItem();
+                localPlace.chooseThis();
+                destination.getItinerary().editItinerary(chosenDay, localPlace);
+                editDestination(destination);
+                frame.dispose();
+            }
         });
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
@@ -326,6 +330,16 @@ public class Gui extends JFrame {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private JComboBox comboBox(Destination destination) {
+        int numDays = destination.getItinerary().getItineraryList().size();
+        Integer[] dayNum = new Integer[numDays];
+        for (int i = 0; i < numDays; i++) {
+            dayNum[i] = i + 1;
+        }
+        JComboBox<Integer> dayNumBox = new JComboBox<>(dayNum);
+        return dayNumBox;
     }
 
     private void addWishlist(Destination destination) {
@@ -393,9 +407,7 @@ public class Gui extends JFrame {
     private void setHomeButton() {
         rightButton.setText("Home");
         rightButton.removeActionListener(rightButton.getActionListeners()[0]);
-        rightButton.addActionListener(e -> {
-            displayDestinations();
-        });
+        rightButton.addActionListener(e -> displayDestinations());
     }
 
     private void initializeHeader() {
@@ -446,7 +458,6 @@ public class Gui extends JFrame {
             }
         });
     }
-
 }
 
 

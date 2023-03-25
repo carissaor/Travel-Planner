@@ -1,15 +1,15 @@
 {"destination list": [
     {
-        "duration": 3,
+        "duration": 4,
         "wishlist": [
             {
-                "cost": 100,
-                "is chosen": false,
+                "cost": 50,
+                "is chosen": true,
                 "description": "ubc",
                 "category": "ACTIVITIES"
             },
             {
-                "cost": 30,
+                "cost": 10,
                 "is chosen": false,
                 "description": "sfu",
                 "category": "ACTIVITIES"
@@ -17,7 +17,12 @@
         ],
         "itinerary": [
             {
-                "each day": [],
+                "each day": [{
+                    "cost": 50,
+                    "is chosen": true,
+                    "description": "ubc",
+                    "category": "ACTIVITIES"
+                }],
                 "description": "Day 1"
             },
             {
@@ -27,10 +32,19 @@
             {
                 "each day": [],
                 "description": "Day 3"
+            },
+            {
+                "each day": [{
+                    "cost": 50,
+                    "is chosen": true,
+                    "description": "ubc",
+                    "category": "ACTIVITIES"
+                }],
+                "description": "Day 4"
             }
         ],
         "place name": "Vancouver",
-        "budget": 100
+        "budget": 0
     },
     {
         "duration": 2,
@@ -46,6 +60,6 @@
             }
         ],
         "place name": "Victoria",
-        "budget": 400
+        "budget": 300
     }
 ]}
