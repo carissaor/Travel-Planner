@@ -4,7 +4,7 @@
         "wishlist": [
             {
                 "cost": 50,
-                "is chosen": true,
+                "is chosen": false,
                 "description": "ubc",
                 "category": "ACTIVITIES"
             },
@@ -19,7 +19,7 @@
             {
                 "each day": [{
                     "cost": 50,
-                    "is chosen": true,
+                    "is chosen": false,
                     "description": "ubc",
                     "category": "ACTIVITIES"
                 }],
@@ -36,7 +36,7 @@
             {
                 "each day": [{
                     "cost": 50,
-                    "is chosen": true,
+                    "is chosen": false,
                     "description": "ubc",
                     "category": "ACTIVITIES"
                 }],
@@ -44,7 +44,7 @@
             }
         ],
         "place name": "Vancouver",
-        "budget": 0
+        "budget": 6
     },
     {
         "duration": 2,
