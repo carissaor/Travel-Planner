@@ -104,6 +104,7 @@ public class Itinerary implements Writable {
         return itineraryList;
     }
 
+    // EFFECTS: return JSONObject according to the itinerary object
     @Override
     public JSONObject toJson() {
         JSONObject jo = new JSONObject();
@@ -113,6 +114,7 @@ public class Itinerary implements Writable {
         return jo;
     }
 
+    // EFFECTS: helper function to convert itineraryList to JSONArray
     private JSONArray toJsonArray() {
         JSONArray ja = new JSONArray();
 

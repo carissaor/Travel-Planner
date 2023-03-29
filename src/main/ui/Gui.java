@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// TODO remove something from itinerary, (progress bar)
+// represents the graphical user interface of the application
 public class Gui extends JFrame {
 
     public static final int WIDTH = 900;
@@ -26,6 +26,7 @@ public class Gui extends JFrame {
     private JButton rightButton;
     private JPanel bodyPanel;
 
+    // EFFECTS: runs the application
     public Gui() {
         super("Trip Planner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +42,8 @@ public class Gui extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: runs the splash screen
     private void splashScreen() {
         JWindow splashScreen = new JWindow();
         ImageIcon splashImage = new ImageIcon("./data/rotating_earth.gif");
@@ -68,6 +71,8 @@ public class Gui extends JFrame {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: initialize the app content
     private void initializeApp() {
         destinationList = new DestinationList();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -78,6 +83,8 @@ public class Gui extends JFrame {
         initializeRight();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initialize the right hand side of the screen
     private void initializeRight() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButton = new JButton("Add");
@@ -87,7 +94,8 @@ public class Gui extends JFrame {
         add(buttonPanel, BorderLayout.EAST);
     }
 
-    // pop up window when add button is clicked
+    // MODIFIES: this
+    // EFFECTS: shows a pop up window when add button is clicked
     private void addDestination() {
         JFrame frame = new JFrame("Add Destination");
         frame.setPreferredSize(new Dimension(350, 200));
@@ -112,6 +120,7 @@ public class Gui extends JFrame {
         frame.setVisible(true);
     }
 
+    // EFFECTS: helper function to create a JTextField and add to the given panel
     private JTextField createTextField(String text, JPanel panel) {
         JTextField textField = new JTextField();
         panel.add(new JLabel(text));
@@ -119,12 +128,15 @@ public class Gui extends JFrame {
         return textField;
     }
 
+    // EFFECTS: helper function to create a JPanel and add the given button to the panel
     private JPanel buttonPanel(JButton addButton) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
         return buttonPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: display all destinations stored in destinationList
     private void displayDestinations() {
         if (bodyPanel != null) {
             remove(bodyPanel);
@@ -149,6 +161,7 @@ public class Gui extends JFrame {
         repaint();
     }
 
+    // EFFECTS: create a JPanel for storing the information of the destination
     private JPanel destinationPanel(JButton nameButton, JLabel budgetLabel, JLabel durationLabel,
                                     JButton removeButton) {
         JPanel destinationPanel = new JPanel(new GridLayout(4, 1));
@@ -159,13 +172,15 @@ public class Gui extends JFrame {
         return destinationPanel;
     }
 
+    // MODIFIES: rightButton
+    // EFFECTS: set rightButton function to add something
     private void setAddButton() {
         rightButton.setText("Add");
         rightButton.removeActionListener(rightButton.getActionListeners()[0]);
         rightButton.addActionListener(e -> addDestination());
     }
 
-    // edit destination page
+    // EFFECTS: create the destination informaiton page
     private void editDestination(Destination destination) {
         setHomeButton();
         remove(bodyPanel);
@@ -178,6 +193,7 @@ public class Gui extends JFrame {
         repaint();
     }
 
+    // EFFECTS: create a JPanel for storing destination information
     private JPanel basicInfoPanel(Destination destination) {
         JPanel basicInfoPanel = new JPanel();
         JPanel placeNamePanel = new JPanel();
@@ -190,6 +206,7 @@ public class Gui extends JFrame {
         return basicInfoPanel;
     }
 
+    // EFFECTS: create a JPanel for storing the duration of the destination
     private JPanel durationPanel(Destination destination) {
         String content = "Duration: ";
         JPanel durationPanel = new JPanel();
@@ -219,6 +236,7 @@ public class Gui extends JFrame {
         return durationPanel;
     }
 
+    // EFFECTS: calculate the new budget if removing a day remove a place from itinerary
     private void doCalculation(EachDay eachDay, Destination destination) {
         for (LocalPlace localPlace : eachDay.getListRelated()) {
             localPlace.removeThis();
@@ -226,6 +244,7 @@ public class Gui extends JFrame {
         }
     }
 
+    // EFFECTS: create a JPanel for storing the budget of the destination
     private JPanel budgetPanel(Destination destination) {
 
         String content = "Budget: ";
@@ -253,6 +272,7 @@ public class Gui extends JFrame {
         return budgetPanel;
     }
 
+    // EFFECTS: create a JPanel for storing the title for the page
     private JPanel detailsPanel(Destination destination) {
         JPanel wrapPanel = new JPanel(new BorderLayout());
 
@@ -270,6 +290,7 @@ public class Gui extends JFrame {
         return wrapPanel;
     }
 
+    // EFFECTS: helper function to create JPanel and add text to the panel
     private JPanel createTitle(String text) {
         JPanel panel = new JPanel(new BorderLayout());
         JLabel label = new JLabel(text, SwingConstants.CENTER);
@@ -278,6 +299,7 @@ public class Gui extends JFrame {
         return panel;
     }
 
+    // EFFECTS: create a JPanel for storing the destination's wishList
     private JPanel wishListPanel(Destination destination) {
         JPanel wishListPanel = new JPanel(new BorderLayout());
         wishListPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -301,6 +323,7 @@ public class Gui extends JFrame {
         return wishListPanel;
     }
 
+    // EFFECTS: create buttons and add it to the categoryPanel
     private void wishListButton(WishList wishList, Category category, JPanel categoryPanel, Destination destination) {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         for (LocalPlace localPlace : wishList.getListRelated()) {
@@ -313,6 +336,7 @@ public class Gui extends JFrame {
         categoryPanel.add(buttonPanel);
     }
 
+    // EFFECTS: a pop-up window that ask user to choose add the place to which day in the itinerary
     private void addToItinerary(Destination destination, LocalPlace localPlace) {
         JFrame frame = new JFrame("Add to itinerary");
         frame.setPreferredSize(new Dimension(350, 200));
@@ -339,6 +363,7 @@ public class Gui extends JFrame {
         frame.setVisible(true);
     }
 
+    // EFFECTS: create a JComboBox according to the length of destination itineraryList
     private JComboBox comboBoxDayNum(Destination destination) {
         int numDays = destination.getItinerary().getItineraryList().size();
         Integer[] dayNum = new Integer[numDays];
@@ -348,6 +373,7 @@ public class Gui extends JFrame {
         return new JComboBox<>(dayNum);
     }
 
+    // EFFECTS: pop-up window that promopt user to input places they want to visit
     private void addWishlist(Destination destination) {
 
         JFrame frame = new JFrame("Add items");
@@ -376,6 +402,7 @@ public class Gui extends JFrame {
         frame.setVisible(true);
     }
 
+    // EFFECTS: create a JComboBox with Category as the fields
     private JComboBox categoryBox(JPanel fieldsPanel) {
         Category[] category = {Category.ACTIVITIES, Category.FOODS, Category.ACCOMMODATIONS, Category.OTHERS};
         JComboBox categoryBox = new JComboBox<>(category);
@@ -384,6 +411,7 @@ public class Gui extends JFrame {
         return categoryBox;
     }
 
+    // EFFECTS: create JPanel for storing and displaying itinerary of the destination
     private JPanel itineraryPanel(Destination destination) {
         JPanel itineraryPanel = new JPanel();
         itineraryPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -408,13 +436,16 @@ public class Gui extends JFrame {
         return itineraryPanel;
     }
 
-
+    // MODIFIES: rightButton
+    // EFFECTS: set rightButton function to return to Home page when clicked
     private void setHomeButton() {
         rightButton.setText("Home");
         rightButton.removeActionListener(rightButton.getActionListeners()[0]);
         rightButton.addActionListener(e -> displayDestinations());
     }
 
+    // MODIFIES: this
+    // EFFECTS: intialize the header for the app
     private void initializeHeader() {
         JLayeredPane headerPanel = new JLayeredPane();
         ImageIcon headerImage = new ImageIcon("./data/earth.jpeg");

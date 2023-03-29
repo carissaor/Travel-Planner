@@ -58,6 +58,7 @@ public class Destination implements Writable {
         return itinerary;
     }
 
+    // EFFECTS: return JSONObject according to the destination object
     @Override
     public JSONObject toJson() {
         JSONObject jo = new JSONObject();
@@ -69,6 +70,7 @@ public class Destination implements Writable {
         return jo;
     }
 
+    // EFFECTS: helper function to convert itineraryList to JSONArray
     private JSONArray toJsonArrayItinerary() {
         JSONArray ja = new JSONArray();
         for (EachDay ed : itinerary.getItineraryList()) {
@@ -77,6 +79,7 @@ public class Destination implements Writable {
         return ja;
     }
 
+    // EFFECTS: helper function to convert wishList to JSONArray
     public JSONArray toJsonArrayWishList() {
 
         JSONArray ja = new JSONArray();

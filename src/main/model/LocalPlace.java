@@ -49,6 +49,7 @@ public class LocalPlace implements Writable {
         return isChosen;
     }
 
+    // EFFECTS: return JSONObject according to the LocalPlace object
     @Override
     public JSONObject toJson() {
         JSONObject jo = new JSONObject();

@@ -37,6 +37,6 @@ new destinations to the existing list of destinations
 - You can generate the second required action related to adding Xs to a Y by clicking the button with text "Remove" to 
 remove the chosen destination from the existing list of destinations
 - You can locate my visual component by loading the app (splash screen)
-- You can save the state of my application by pressing yes in a popup window that shows before quitting the application.
-- You can reload the state of my application by pressing yes in a popup window when starting the application.
+- You can save the state of my application by clicking yes in a popup window that shows before quitting the application.
+- You can reload the state of my application by clicking yes in a popup window when starting the application.
 

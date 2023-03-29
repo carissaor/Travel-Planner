@@ -19,6 +19,7 @@ public class EachDay extends ListRelated<LocalPlace> implements Writable {
         return text;
     }
 
+    // EFFECTS: return JSONObject according to the EachDay object
     @Override
     public JSONObject toJson() {
         JSONObject jo = new JSONObject();
@@ -27,6 +28,7 @@ public class EachDay extends ListRelated<LocalPlace> implements Writable {
         return jo;
     }
 
+    // EFFECTS: helper function to convert list to JSONArray
     private JSONArray toJsonArray() {
         JSONArray ja = new JSONArray();
 
