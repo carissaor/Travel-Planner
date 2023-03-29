@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// TODO remove something from itinerary, (progress bar)
 public class Gui extends JFrame {
 
     public static final int WIDTH = 900;
@@ -255,28 +256,31 @@ public class Gui extends JFrame {
     private JPanel detailsPanel(Destination destination) {
         JPanel wrapPanel = new JPanel(new BorderLayout());
 
-        JPanel testing = new JPanel(new BorderLayout());
         JPanel titlePanel = new JPanel(new GridLayout(2, 0));
-        JLabel wishListTitle = new JLabel("All info");
-        wishListTitle.setFont(new Font(null, Font.BOLD, 20));
-//        JLabel itineraryTitle = new JLabel("Itinerary");
-//        itineraryTitle.setFont(new Font(null, Font.BOLD, 20));
-        titlePanel.add(wishListTitle);
-//        titlePanel.add(itineraryTitle);
-        testing.add(titlePanel, BorderLayout.BEFORE_FIRST_LINE);
+        titlePanel.add(createTitle("All"));
+        titlePanel.add(createTitle("Itinerary"));
 
         JPanel detailsPanel = new JPanel(new GridLayout(2, 0));
         detailsPanel.add(wishListPanel(destination));
         detailsPanel.add(itineraryPanel(destination));
 
-        wrapPanel.add(testing, BorderLayout.WEST);
+        wrapPanel.add(titlePanel, BorderLayout.WEST);
         wrapPanel.add(detailsPanel, BorderLayout.CENTER);
 
         return wrapPanel;
     }
 
+    private JPanel createTitle(String text) {
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(new Font(null, Font.BOLD, 20));
+        panel.add(label, BorderLayout.NORTH);
+        return panel;
+    }
+
     private JPanel wishListPanel(Destination destination) {
         JPanel wishListPanel = new JPanel(new BorderLayout());
+        wishListPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton addButton = new JButton("Add");
         addButton.setPreferredSize(new Dimension(50, 20));
@@ -285,7 +289,7 @@ public class Gui extends JFrame {
         WishList wishList = destination.getWishList();
         JPanel contentPanel = new JPanel(new GridLayout(2, 2));
         for (Category category : Category.values()) {
-            JPanel categoryPanel = new JPanel(new GridLayout(5, 0));
+            JPanel categoryPanel = new JPanel(new GridLayout(2, 0));
             JLabel titleLabel = new JLabel(String.valueOf(category));
             titleLabel.setFont(new Font(null, Font.BOLD, 17));
             categoryPanel.add(titleLabel);
@@ -298,13 +302,15 @@ public class Gui extends JFrame {
     }
 
     private void wishListButton(WishList wishList, Category category, JPanel categoryPanel, Destination destination) {
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         for (LocalPlace localPlace : wishList.getListRelated()) {
             if (localPlace.getCategory() == category) {
                 JButton wishListButton = new JButton(localPlace.getDescription());
                 wishListButton.addActionListener(e -> addToItinerary(destination, localPlace));
-                categoryPanel.add(wishListButton);
+                buttonPanel.add(wishListButton);
             }
         }
+        categoryPanel.add(buttonPanel);
     }
 
     private void addToItinerary(Destination destination, LocalPlace localPlace) {

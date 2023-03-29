@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 // Represent tests for DestinationList class
 public class DestinationListTest {
@@ -22,6 +23,14 @@ public class DestinationListTest {
 
     @Test
     public void testConstructor() {
+        assertEquals(0, destinationList.getListRelated().size());
+    }
+
+    @Test
+    public void testRemoveItem() {
+        destinationList.addItem(destination1);
+        destinationList.removeItem("place1");
+        assertFalse(destinationList.getListRelated().contains(destination1));
         assertEquals(0, destinationList.getListRelated().size());
     }
 
