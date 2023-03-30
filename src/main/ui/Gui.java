@@ -84,7 +84,7 @@ public class Gui extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: initialize the right hand side of the screen
+    // EFFECTS: initialize the right-hand side of the screen
     private void initializeRight() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButton = new JButton("Add");
@@ -95,7 +95,7 @@ public class Gui extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: shows a pop up window when add button is clicked
+    // EFFECTS: shows a pop-up window when add button is clicked
     private void addDestination() {
         JFrame frame = new JFrame("Add Destination");
         frame.setPreferredSize(new Dimension(350, 200));
@@ -142,7 +142,7 @@ public class Gui extends JFrame {
             remove(bodyPanel);
         }
         bodyPanel = new JPanel();
-        bodyPanel.setName("bodyPanel");
+
         for (Destination destination : destinationList.getListRelated()) {
             JButton nameButton = new JButton(destination.getPlaceName());
             nameButton.addActionListener(e -> editDestination(destination));
@@ -180,7 +180,7 @@ public class Gui extends JFrame {
         rightButton.addActionListener(e -> addDestination());
     }
 
-    // EFFECTS: create the destination informaiton page
+    // EFFECTS: create the destination information page
     private void editDestination(Destination destination) {
         setHomeButton();
         remove(bodyPanel);
@@ -373,7 +373,7 @@ public class Gui extends JFrame {
         return new JComboBox<>(dayNum);
     }
 
-    // EFFECTS: pop-up window that promopt user to input places they want to visit
+    // EFFECTS: pop-up window that prompt user to input places they want to visit
     private void addWishlist(Destination destination) {
 
         JFrame frame = new JFrame("Add items");
@@ -445,7 +445,7 @@ public class Gui extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: intialize the header for the app
+    // EFFECTS: initialize the header for the app
     private void initializeHeader() {
         JLayeredPane headerPanel = new JLayeredPane();
         ImageIcon headerImage = new ImageIcon("./data/earth.jpeg");
