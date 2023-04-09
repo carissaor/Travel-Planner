@@ -40,3 +40,23 @@ remove the chosen destination from the existing list of destinations
 - You can save the state of my application by clicking yes in a popup window that shows before quitting the application.
 - You can reload the state of my application by clicking yes in a popup window when starting the application.
 
+## Phase 4: Task 2
+Sun Apr 09 14:21:54 PDT 2023
+
+add place1 to destination list.
+
+Sun Apr 09 14:21:58 PDT 2023
+
+1 day is added to duration
+
+Sun Apr 09 14:21:58 PDT 2023
+
+$ 1 is added to budget
+
+Sun Apr 09 14:21:59 PDT 2023
+
+1 day is removed from duration
+
+Sun Apr 09 14:22:01 PDT 2023
+
+remove place1 from destination list.

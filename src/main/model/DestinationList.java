@@ -14,7 +14,22 @@ public class DestinationList extends ListRelated<Destination> implements Writabl
 
     // EFFECTS: remove destination from destinationList if the name equals
     public void removeItem(String name) {
-        super.getListRelated().removeIf(destination -> destination.getPlaceName().equals(name));
+        super.getListRelated().removeIf(destination -> {
+            if (destination.getPlaceName().equals(name)) {
+                Event event = new Event("remove " + destination.getPlaceName() + " from destination list.");
+                EventLog.getInstance().logEvent(event);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public void addItem(Destination destination) {
+        super.getListRelated().add(destination);
+        Event event = new Event("add " + destination.getPlaceName() + " to destination list.");
+        EventLog.getInstance().logEvent(event);
+
     }
 
     // EFFECTS: return JSONObject according to the destination list object

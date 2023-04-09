@@ -31,16 +31,7 @@ public class Gui extends JFrame {
     // EFFECTS: runs the application
     public Gui() {
         super("Trip Planner");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                for (Event event: EventLog.getInstance()) {
-                    System.out.println(event.toString());
-                }
-                System.exit(0);
-            }
-        });
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         initializeApp();
         splashScreen();
@@ -113,8 +104,7 @@ public class Gui extends JFrame {
         JTextField addName = createTextField("Name:", fieldsPanel);
         JTextField addBudget = createTextField("Budget:", fieldsPanel);
         JTextField addDuration = createTextField("Duration:", fieldsPanel);
-        Event event = new Event(addName.getText());
-        JButton addButton = new JButton(new AddLog(event));
+        JButton addButton = new JButton("Save");
         addButton.addActionListener(e -> {
             String name = addName.getText();
             int budget = Integer.parseInt(addBudget.getText());
@@ -502,23 +492,12 @@ public class Gui extends JFrame {
                         System.out.println("Unable to write to file: " + JSON_STORE);
                     }
                 }
+                for (Event e : EventLog.getInstance()) {
+                    System.out.println(e.toString());
+                }
             }
         });
     }
-
-    private class AddLog extends AbstractAction {
-        Event e;
-        AddLog(Event e) {
-            super("Add");
-            this.e = e;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            EventLog.getInstance().logEvent(e);
-        }
-    }
-
 
 }
 

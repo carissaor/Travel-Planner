@@ -62,6 +62,8 @@ public class Itinerary implements Writable {
         if (budgetLeft < 0) {
             budgetLeft = 0;
         }
+        Event event = new Event("$ " + amount + " is added to budget");
+        EventLog.getInstance().logEvent(event);
     }
 
     public int getBudgetLeft() {
@@ -87,10 +89,14 @@ public class Itinerary implements Writable {
             if (amount < 0) {
                 for (int i = itineraryList.size() - 1; i >= duration; i--) {
                     itineraryList.remove(itineraryList.get(i));
+                    Event event = new Event(Math.abs(amount) + " day is removed from duration");
+                    EventLog.getInstance().logEvent(event);
                 }
             } else {
                 for (int i = itineraryList.size(); i < duration; i++) {
                     itineraryList.add(new EachDay(TEXT + (i + 1)));
+                    Event event = new Event(amount + " day is added to duration");
+                    EventLog.getInstance().logEvent(event);
                 }
             }
         }
