@@ -1,11 +1,13 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
@@ -29,10 +31,18 @@ public class Gui extends JFrame {
     // EFFECTS: runs the application
     public Gui() {
         super("Trip Planner");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event: EventLog.getInstance()) {
+                    System.out.println(event.toString());
+                }
+                System.exit(0);
+            }
+        });
         setResizable(false);
         initializeApp();
-
         splashScreen();
         loadApp();
         displayDestinations();
@@ -103,7 +113,8 @@ public class Gui extends JFrame {
         JTextField addName = createTextField("Name:", fieldsPanel);
         JTextField addBudget = createTextField("Budget:", fieldsPanel);
         JTextField addDuration = createTextField("Duration:", fieldsPanel);
-        JButton addButton = new JButton("Save");
+        Event event = new Event(addName.getText());
+        JButton addButton = new JButton(new AddLog(event));
         addButton.addActionListener(e -> {
             String name = addName.getText();
             int budget = Integer.parseInt(addBudget.getText());
@@ -494,6 +505,21 @@ public class Gui extends JFrame {
             }
         });
     }
+
+    private class AddLog extends AbstractAction {
+        Event e;
+        AddLog(Event e) {
+            super("Add");
+            this.e = e;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            EventLog.getInstance().logEvent(e);
+        }
+    }
+
+
 }
 
 
