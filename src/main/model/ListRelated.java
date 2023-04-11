@@ -4,8 +4,8 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-// A subclass for WishList and EachDay as the two classes both have an array list and similar behavior
-public class ListRelated<T> {
+// Abstract class for DestinationList, WishList and EachDay as the classes all have an array list and similar behavior
+public abstract class ListRelated<T> {
     private ArrayList<T> listRelated;
 
     // EFFECTS: construct ListRelated object with empty array list
