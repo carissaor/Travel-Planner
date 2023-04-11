@@ -60,3 +60,17 @@ Sun Apr 09 14:21:59 PDT 2023
 Sun Apr 09 14:22:01 PDT 2023
 
 remove place1 from destination list.
+
+## Phase 4: Task 3
+Singleton pattern could be used for the DestinationList class. 
+This is because it makes more sense if there is only 1 destination list to save all the destinations and
+since several classes has association with the DestinationList class, it is important to 
+ensure all classes are referring to the same DestinationList.
+
+Secondly, instead of setting type of DestinationList as an array list,
+hashMap could be used.
+This enables faster and easier retrieval of destination,
+the order of destinations does not matter and
+it makes more sense if no duplicate of destination is allowed.
+So the key could be the name of the place and value could be the Destination type.
+
